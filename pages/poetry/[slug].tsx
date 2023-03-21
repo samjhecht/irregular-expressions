@@ -8,6 +8,7 @@ import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
 import { getPostBySlug, getAllPosts } from '../../lib/api'
 import Head from 'next/head'
+// import markdownToHtml from '../../lib/markdownToHtml'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
@@ -47,12 +48,13 @@ type Params = {
     }
 }
 
+
 const components = { Link, Image, Box, Typography }
 
-export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPost, nextPost }: PostProps) {
+export default function PoemTemplate({ frontMatter, slug, mdxSource, previousPost, nextPost }: PostProps) {
 
     const router = useRouter()
-    const postTitle = `${frontMatter.title}` || 'Regular Expressions Blog Post'
+    const postTitle = `${frontMatter.title}` || 'Regular Poetic Expression'
     if (!router.isFallback && !slug) {
         return <ErrorPage statusCode={404} />
     }
@@ -99,14 +101,14 @@ export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPos
                     }}>
                     <Box>
                         {previousPost && (
-                            <Link href={`/blog${previousPost.slug}`} rel="prev">
+                            <Link href={`/poetry${previousPost.slug}`} rel="prev">
                                 ← {previousPost.title}
                             </Link>
                         )}
                     </Box>
                     <Box>
                         {nextPost && (
-                            <Link href={`/blog${nextPost.slug}`} rel="next">
+                            <Link href={`/poetry${nextPost.slug}`} rel="next">
                                 {nextPost.title} →
                             </Link>
                         )}
@@ -118,7 +120,7 @@ export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPos
 }
 
 const getStaticPaths = async () => {
-    const posts = getAllPosts('content/_blog-posts', ['slug'])
+    const posts = getAllPosts('content/_poetry', ['slug'])
     const slugs = posts.map(post => post.slug)
 
     const paths = slugs.map(s => ({
@@ -134,12 +136,12 @@ const getStaticPaths = async () => {
 }
 
 const getStaticProps = async ({ params }: Params) => {
-    const allPosts = await getAllPosts('content/_blog-posts', ['slug', 'title'])
+    const allPosts = await getAllPosts('content/_poetry', ['slug', 'title'])
     const postIndex = allPosts.findIndex(post => post.slug === params.slug)
     const previousPost = allPosts[postIndex - 1] || null
     const nextPost = allPosts[postIndex + 1] || null
 
-    const postFilePath = path.join('content/_blog-posts', `${params.slug}.mdx`);
+    const postFilePath = path.join('content/_poetry', `${params.slug}.mdx`);
     const fileContents = fs.readFileSync(postFilePath, 'utf-8');
     const { data: frontMatter, content } = matter(fileContents)
 

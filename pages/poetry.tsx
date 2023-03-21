@@ -1,33 +1,37 @@
-import Image from 'next/image';
-import * as React from "react"
-import { List, ListItem, ListItemText, Stack, Typography, Box } from '@mui/material';
+import { List, ListItem, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import Link from '../components/link';
-import ThumbnailImage from '../components/blog-thumbnail-image';
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+// import ThumbnailImage from '../components/blog-thumbnail-image';
 
 
-type PoemType = {
-    frontMatter: {
-        title: string
-        date: string
-        excerpt: string
-        description: string
-        thumbnailImage: {
-            src: string
-            alt: string
-        }
-    }
-    slug: string
-}
+type FrontMatter = {
+    title: string;
+    date: string;
+    excerpt: string;
+    description: string;
+    thumbnailImage: {
+        src: string;
+        alt: string;
+    };
+    images: {
+        src: string;
+        alt: string;
+    }[];
+};
+
+type PostType = {
+    frontMatter: FrontMatter;
+    slug: string;
+};
 
 
 type Props = {
-    allPoems: PoemType[]
+    allPoems: PostType[]
 }
 
 export default function Poetry({ allPoems }: Props) {
@@ -44,7 +48,7 @@ export default function Poetry({ allPoems }: Props) {
         <>
             <Layout>
                 <Head>
-                    <title>{`Irregular Poetic Expressions`}</title>
+                    <title>{`Irregular Expressions Poetry`}</title>
                 </Head>
                 <List>
                     {allPoems.map((poem) => {
@@ -53,7 +57,7 @@ export default function Poetry({ allPoems }: Props) {
 
                         return (
                             <ListItem
-                                key={`/blog${poem.slug}`}
+                                key={`/poetry${poem.slug}`}
                                 sx={{
                                     display: 'flex',
                                     alignItems: 'stretch'
@@ -73,13 +77,13 @@ export default function Poetry({ allPoems }: Props) {
                                 >
                                     <Stack>
                                         <Link
-                                            href={'/blog/' + poem.slug}
+                                            href={'/poetry/' + poem.slug}
                                             sx={{
                                                 color: 'primary.black',
                                                 textDecoration: 'none',
                                             }}>
                                             <Typography
-                                            variant="h5"
+                                                variant="h5"
                                                 sx={{ textDecoration: "none", fontWeight: 'bold' }}
                                             >
                                                 {title}
@@ -93,7 +97,7 @@ export default function Poetry({ allPoems }: Props) {
                                             {poem.frontMatter.date}
                                         </Typography>
                                         <Link
-                                            href={'/blog/' + poem.slug}
+                                            href={'/poetry/' + poem.slug}
                                             sx={{
                                                 variant: 'body2',
                                                 fontWeight: 'normal',
@@ -106,6 +110,10 @@ export default function Poetry({ allPoems }: Props) {
                                         </Link>
                                     </Stack>
                                 </Box>
+                                {/* for right now i'm leaving this in in case i want to get creative
+                                and have the poetry page have some kind of color or images down the line.
+                                I figure it shouldn't really cause any issues since the poetry list 
+                                items don't take up the whole width anyway.  */}
                                 <Box
                                     width="30%"
                                     height="100%"
@@ -121,11 +129,11 @@ export default function Poetry({ allPoems }: Props) {
                                         marginLeft: '0.5rem',
                                     }}
                                 >
-                                    <ThumbnailImage
+                                    {/* <ThumbnailImage
                                         src={poem.frontMatter.thumbnailImage.src}
                                         title={poem.frontMatter.title}
                                         slug={poem.slug}
-                                    />
+                                    /> */}
                                 </Box>
                             </ListItem>
                         )
@@ -137,15 +145,18 @@ export default function Poetry({ allPoems }: Props) {
 }
 
 export const getStaticProps = async () => {
-    const files = fs.readdirSync(path.join('content/_poetry'))
 
-    const allPoems = files.map(filename => {
-        const markdownWithMeta = fs.readFileSync(path.join('content/_poetry', filename), 'utf-8')
+    const allPosts = await getAllPosts('content/_poetry', ['slug', 'title','date'])
+        .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+
+    const allPoems = allPosts.map(filename => {
+        const markdownWithMeta = fs.readFileSync(path.join('content/_poetry', `${filename.slug}.mdx`), 'utf-8')
         const { data: frontMatter } = matter(markdownWithMeta)
 
+        console.log(frontMatter)
         return {
             frontMatter,
-            slug: filename.split('.')[0]
+            slug: filename.slug
         }
     })
 

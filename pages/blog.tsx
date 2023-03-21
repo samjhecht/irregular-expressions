@@ -1,10 +1,8 @@
-import Image from 'next/image';
-import * as React from "react"
-import { List, ListItem, ListItemText, Stack, Typography, Box } from '@mui/material';
+import { List, ListItem, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
-import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import Link from '../components/link';
+import { getAllPosts } from '../lib/api'
 import ThumbnailImage from '../components/blog-thumbnail-image';
 import fs from 'fs'
 import path from 'path'
@@ -142,21 +140,19 @@ export default function Blog({ allBlogPosts }: Props) {
     )
 }
 
-
-
 export const getStaticProps = async () => {
-    const files = fs
-        .readdirSync(path.join(process.cwd(), 'content/_blog-posts'))
 
-    console.log(files)
-    const allBlogPosts = files.map(filename => {
-        const markdownWithMeta = fs.readFileSync(path.join('content/_blog-posts', filename), 'utf-8')
+    const allPosts = await getAllPosts('content/_blog-posts', ['slug', 'title','date'])
+        .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+
+    const allBlogPosts = allPosts.map(filename => {
+        const markdownWithMeta = fs.readFileSync(path.join('content/_blog-posts', `${filename.slug}.mdx`), 'utf-8')
         const { data: frontMatter } = matter(markdownWithMeta)
 
         console.log(frontMatter)
         return {
             frontMatter,
-            slug: filename.split('.')[0]
+            slug: filename.slug
         }
     })
 

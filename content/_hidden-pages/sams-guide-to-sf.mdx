@@ -1,0 +1,182 @@
+---
+title: Stuff to Do When Visiting San Francisco
+date: "2022-01-05"
+# description: ""
+---
+
+
+
+Eat
+
+
+Marengo - Gourmet sliders, glass roof.             
+Jackson Fillmore - Neighborhood Italian spot
+Brenda's - Good breakfast. French/ New Orleans soul food. Watermelon sweet tea.
+Mission Beach Cafe - Best Brunch
+San Tung - Best Chinese. Dry fried beef.  Potstickers
+House - Sleeper in North Beach. Asian fusion. Amazing ribeye, fish, and salmon rolls
+Catonia - Nicer Italian in N Beach
+Wayfarer Tavern - Celeb chef downtown. Great food and atmosphere. Famous fried chicken
+Rosamunde - Hot dog counter in Lower Haight. Get an Aventinas beer from Tornado's next door
+Frances ‐ Book well in advance. Favorite food in the city. They do take walk in’s right when they open, if you can do an early dinner.
+Leopold's ‐ German food on Polk. Fun spot.
+Suppenkuche ‐ German food on Hayes. Fun spot.
+Zuni ‐ Excellent food. The Chicken for two is a renowned sf dish
+Pizzetta 211 ‐ Delicious artisan pizzas in the Richmond. You can bring your own wine.
+Spruce‐ fancy dinner
+Boulevard ‐ Fancy dinner
+StateBird Provision Co. ‐  New. California Style  
+Vegetarian:
+Greens: one of my favorite restaurants in the city.  Down on the harbour in Fort Mason.  Great view of the bridge and awesome vegetarian food with vegan options.  
+Spots for Foodies (reserve in advance):
+Nopa
+State Bird Provisions
+Tartine
+Spruce
+
+
+Drink
+
+
+Top of the Mark ‐ Famous Sf Hotel on Nob Hill. One cocktail to see the history, the views, and check it off the list.
+Buena Vista Cafe ‐ Irish Coffees
+Marengo ‐ Back bar. Retractable glass roof. Love the owners and the food/drinks are great
+Bourbon and Branch ‐ Speakeasy in the tenderloin. Password at the door is Library. Secret Bookcase.
+Zeitgeist ‐ Mission biker bar. Great sf spot. Big outdoor space on a nice day. Bloodys, burgers, beers, good matches.
+MakeOut Room ‐ Mission bar for dancing.
+Elbo Room ‐ Saturday night Soul Night.
+BlackHorse Pub ‐ Tiiiiny bar off Polk. Seats 10 people max. Run by a nice English guy that has a different keg every night.
+Fernet backed with Ginger Ale ‐ native sf shot. digestif, good after dinner.
+Cavallo Point ‐ Bar/ Porch at the Murray Circle Bar.
+Biergarten ‐ Hayes Valley.  
+
+
+
+
+Stuff to Do
+
+
+The Iconic Spots:
+Alcatraz ‐ good tour. Book well in advance.
+The Painted Ladies - grab a sandwich from BiRite on Divisadero and go sit in the park and soak in the views.
+Ride the Cable Car ‐ hang off the side to get that warm fuzzy sf feeling                                                   
+City Lights Book Store ‐ Columbus and Broadway. Famous book shop where all of the Beat writers of the 50’s 60’s spent their time.
+Golden Gate Bridge - consider parking down near Chrissy Field and then you can walk up to the bridge and across it.  
+Fisherman’s Wharf is super touristy so I recommend avoiding it unless you’re specifically looking for a touristy experience
+
+Hikes/Views/Walks/Experiences
+Saturday Farmers Market at the Ferry Building ‐ Chilaquiles at the Mexican Food tent in the back right  is an excellent breakfast.
+Lost Coast Trail ‐ Short hike for sunset or sunrise at Dead Man’s Point
+Walk/shop Hayes Valley (Laguna to Gough).
+Walk/shop Chestnut Street (Fillmore to Divis, Pop in to Marine layer, friend of mine’s store. )
+Walk/shop Fillmore (Pine up to Broadway, Amazing view At Fillmore and Broadway)
+Walk/shop (Valencia from 16th to 23rd)
+
+Sports
+Giants Game ‐ AT&T park
+Warriors BBall - gotta go to oakland for this until they build the new stadium
+Sharks Hockey - gotta go to San Jose but doable on the Caltrain. 
+Football - football sucks.  Just stop watching football and you’ll be fine. 
+
+Museums
+deYoung Art Museum: in GG park.  Cool observation deck with great views
+Legion of Honor: Sam’s favorite art museum in the city.  Good impressionism exhibit.
+The MOMA: recently remodeled.  
+The Exploratorium
+
+
+Live Music
+
+Bars/Restaurants that Usually Have Live Music:
+Club Deluxe (in the Haight)
+Concerts:
+The Fillmore - This one is my favorite.  The acoustics are quite good and artists always seem to have fun playing there, which makes the show better. if the show sells out, the give you a free concert poster and a delicious apple at the end.  it's very historic and they have posters on all the walls from all the previous shows going back to the 60s.
+The Independent - small, intimate venue.  there's really no bad view in the house.
+The Fox - Over in Oakland.  lots of good shows.  I personally don't like the acoustics there as much but it's fun to go over to oakland and there are a lot of good musicians that come through there.
+The Greek Theater - In Berkeley.  Outdoor amphitheater.  Awesome on a springtime Saturday night!
+Other medium sized venues in SF: 
+The Masonic
+Great American Music Hall
+The Warfield (down on market.  it's actually a pretty big theater)
+Other small venues in SF: 
+Bottom of the Hill
+The Chapel (in the mission)
+
+Clubs
+It’s been a while since I got all up in da club, so I’m probably not the best person to give nightclub recommendations.  However, here are some places to start with if you really wanna not be able to dance and don’t care about being able to hear yourself think.
+Matrix on fillmore
+Mighty
+The mezzanine
+mercer
+
+
+Stay
+
+Main Hotel Areas are Downtown, Nob Hill and Embarcadero. 
+Laurel Inn – Laurel Heights. Not too expensive. Good spot near Presidio.
+Artist's Inn ‐ B&B in Pac Heights.
+Hotel Drisco – Pac Heights
+Airbnb
+Avoid Soma, the tenderloin, mission bay, civic center, financial district.  In summary, I recommend not staying in an airbnb downtown.  I’d suggest the Mission, Pac Heights, Hayes Valley, the Haight / Duboce Triangle, or Cole Valley for best AirBnB experience. 
+
+Hotels
+So, this is one I recommend like if a friend’s parents are coming to town and they want to stay in a super comfy / fancy boutique one in Pac Heights: https://goo.gl/maps/oEhDdWaiezkqyKnW6 
+Downsides: price is high and it’s not walkable to public transit or downtown.  But it’s a great central home base if you’re touring around the city.
+I personally would prefer to go w/ one that’s in SOMA instead of being in union square on the Tenderloin side of market.  There are several around Yerba Buena that we’ve done events at for work a few times and are nice: 
+The W: https://goo.gl/maps/jyVakayd5DYot1kq7
+St. Regis: https://goo.gl/maps/uqGavitf4BkMGFZK9
+The Intercontinental: https://goo.gl/maps/QT3GXAvdgp9s9Kzs6 (Note, that’s a different one from the InterContinental Mark Hopkins, which is the one up near the ritz that has the Top of the Mark restaurant/bar at the top.   That’s another one that’s nice enough and would be cheaper and is far enough up the hill all the way in nob hill to be sufficiently away from the TL)
+The Omni over in the financial district: https://g.page/omni-san-francisco-hotel?share.   Good option near downtown without being in Union Square near the TL.
+Japan Town: 
+https://g.page/HotelKabuki?share
+nice and something different compared to the typical downtown neighborhoods.  Just not walkable if ur doing downtown meetings
+
+
+Day Trip Ideas
+
+
+Sausalito ‐ Rent/Ride a bike across the Golden Gate. Paddle Board next to seals and House Boats at Sea Trek.  Lunch and Bocce at Bar Bocce. Ferry back.
+Wine County ‐ Any of tours will be the same for the most part. Alternative is to rent a car,  spend one night there, and not get too tipsy so you can drive. I prefer Sonoma. Wineries there are Benziger, Gundlach Bunsch, and Scribe.  Dinner at El Dorado Kitchen.
+Muir Beach ‐ 90 min coastal hike, round trip to Pirates Cove. Take a load off on the lawn at the
+Pelican inn after for beers and apps, and laying in the grass             
+German Tourist Club – Hike Mt Tam to this Mid‐ mountain Swiss Hostel Like spot. Bring a pack of cards and 20 for a pitcher.                      
+Deep Sea Fishing:
+Book a boat out of fisherman’s wharf.  You can either go out of the Golden Gate or do more local fishing in the bay.  
+Others (with overnight):
+Carmel (aquarium at Pacific Grove)
+Big Sur
+Yosemite
+Tahoe
+
+Date Spot Recommendations
+
+
+Dinner:
+La Mediterranee
+Cliff house bistro for sunset
+Out the door
+Chili pies
+Anchor oyster bar in the Castro 
+The Morris 
+Greens 
+Forbes island
+
+Dancing:
+Tupelo
+Madrone (open mic can be good too)
+Boom boom room
+
+Drinks:
+The Page (Dive bar)
+The alembic
+Zam zam
+Chambers
+Top of the mark (fancy)
+California wine merchant (in the marina - preppy)
+Trick dog
+The Morris (get bartender name from Ben) 
+Club deluxe (live music)
+Martunis 
+Lone palm
+West coast wine and cheese
+
