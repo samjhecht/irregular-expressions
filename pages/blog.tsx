@@ -27,6 +27,7 @@ type FrontMatter = {
 type PostType = {
     frontMatter: FrontMatter;
     slug: string;
+    excerpt: string;
 };
 
 
@@ -53,7 +54,7 @@ export default function Blog({ allBlogPosts }: Props) {
                 <List>
                     {allBlogPosts.map((post) => {
                         const title = post.frontMatter.title || post.slug
-                        const blogDescription = post.frontMatter.description || post.frontMatter.excerpt
+                        const blogDescription = post.frontMatter.description || post.excerpt
 
                         return (
                             <ListItem
@@ -147,9 +148,8 @@ export const getStaticProps = async () => {
 
     const allBlogPosts = allPosts.map(filename => {
         const markdownWithMeta = fs.readFileSync(path.join('content/_blog-posts', `${filename.slug}.mdx`), 'utf-8')
-        const { data: frontMatter } = matter(markdownWithMeta)
+        const { data: frontMatter} = matter(markdownWithMeta);
 
-        console.log(frontMatter)
         return {
             frontMatter,
             slug: filename.slug

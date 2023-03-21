@@ -1,0 +1,13 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.poetry {
+  position: relative;
+  overflow: hidden;
+  font-size: 24px;
+  text-align: center;
+}
