@@ -7,37 +7,51 @@ import ThumbnailImage from '../components/blog-thumbnail-image';
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { allBlogs, Blog } from 'contentlayer/generated';
+import { compareDesc, format, parseISO } from 'date-fns'
+
+// type FrontMatter = {
+//     title: string;
+//     date: string;
+//     excerpt: string;
+//     description: string;
+//     thumbnailImage: {
+//         src: string;
+//         alt: string;
+//     };
+//     images: {
+//         src: string;
+//         alt: string;
+//     }[];
+// };
+
+// type PostType = {
+//     frontMatter: FrontMatter;
+//     slug: string;
+//     excerpt: string;
+// };
 
 
-type FrontMatter = {
-    title: string;
-    date: string;
-    excerpt: string;
-    description: string;
-    thumbnailImage: {
-        src: string;
-        alt: string;
-    };
-    images: {
-        src: string;
-        alt: string;
-    }[];
-};
-
-type PostType = {
-    frontMatter: FrontMatter;
-    slug: string;
-    excerpt: string;
-};
+// type Props = {
+//     allBlogPosts: PostType[]
+// }
 
 
-type Props = {
-    allBlogPosts: PostType[]
-}
+export async function getStaticProps() {
+    
+    const posts: Blog[] = allBlogs.sort((a, b) => {
+      return compareDesc(new Date(a.date), new Date(b.date))
+    })
+    return { 
+        props: {
+            posts
+        }
+    }
+  }
 
-export default function Blog({ allBlogPosts }: Props) {
+export default function BlogHome({ posts }: { posts: Blog[] }) {
 
-    if (allBlogPosts.length === 0) {
+    if (posts.length === 0) {
         return (
             <Layout>
                 <Typography variant="body1">There are no blog posts yet.</Typography>
@@ -52,9 +66,9 @@ export default function Blog({ allBlogPosts }: Props) {
                     <title>{`Irregular Expressions Blog`}</title>
                 </Head>
                 <List>
-                    {allBlogPosts.map((post) => {
-                        const title = post.frontMatter.title || post.slug
-                        const blogDescription = post.frontMatter.description || post.excerpt
+                    {posts.map((post) => {
+                        const title = post.title || post.slug
+                        const blogDescription = post.description || null
 
                         return (
                             <ListItem
@@ -95,7 +109,7 @@ export default function Blog({ allBlogPosts }: Props) {
                                             variant="body2"
                                             sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}
                                         >
-                                            {post.frontMatter.date}
+                                            {post.date}
                                         </Typography>
                                         <Link
                                             href={'/blog/' + post.slug}
@@ -127,8 +141,8 @@ export default function Blog({ allBlogPosts }: Props) {
                                     }}
                                 >
                                     <ThumbnailImage
-                                        src={post.frontMatter.thumbnailImage.src}
-                                        title={post.frontMatter.title}
+                                        src={post.thumbnailImage}
+                                        title={post.title}
                                         slug={post.slug}
                                     />
                                 </Box>
@@ -141,24 +155,24 @@ export default function Blog({ allBlogPosts }: Props) {
     )
 }
 
-export const getStaticProps = async () => {
+// export const getStaticProps = async () => {
 
-    const allPosts = await getAllPosts('content/_blog-posts', ['slug', 'title','date'])
-        .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+//     const allBlogs = await getAllPosts('content/_blog-posts', ['slug', 'title','date'])
+//         .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
 
-    const allBlogPosts = allPosts.map(filename => {
-        const markdownWithMeta = fs.readFileSync(path.join('content/_blog-posts', `${filename.slug}.mdx`), 'utf-8')
-        const { data: frontMatter} = matter(markdownWithMeta);
+//     const allBlogPosts = allPosts.map(filename => {
+//         const markdownWithMeta = fs.readFileSync(path.join('content/_blog-posts', `${filename.slug}.mdx`), 'utf-8')
+//         const { data: frontMatter} = matter(markdownWithMeta);
 
-        return {
-            frontMatter,
-            slug: filename.slug
-        }
-    })
+//         return {
+//             frontMatter,
+//             slug: filename.slug
+//         }
+//     })
 
-    return {
-        props: {
-            allBlogPosts
-        }
-    }
-}
+//     return {
+//         props: {
+//             allBlogPosts
+//         }
+//     }
+// }
