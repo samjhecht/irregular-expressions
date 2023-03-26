@@ -1,63 +1,66 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import Link from '../../components/link'
 import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
-import { getPostBySlug, getAllPosts } from '../../lib/api'
+// import { getPostBySlug, getAllPosts } from '../../lib/api'
 import Head from 'next/head'
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import Image from 'next/image';
 import BlogImage from '../../components/BlogImage'
-import { format, parseISO } from "date-fns";
-
-type FrontMatter = {
-    title: string;
-    date: string;
-    excerpt: string;
-    description: string;
-    thumbnailImage: {
-        src: string;
-        alt: string;
-    };
-    images: {
-        src: string;
-        alt: string;
-    }[];
-};
-
-type Items = {
-    [key: string]: string
-  }
-
-type PostProps = {
-    frontMatter: FrontMatter;
-    slug: string;
-    mdxSource: MDXRemoteSerializeResult;
-    previousPost: Items;
-    nextPost: Items;
-};
+import { compareDesc, format, parseISO } from "date-fns";
+import { allBlogPosts, BlogPost } from "contentlayer/generated";
+import { useMDXComponent } from 'next-contentlayer/hooks'
 
 
-type Params = {
-    params: {
-        slug: string
+type BlogPostProps = {
+    post: BlogPost,
+    previousPost: BlogPost,
+    nextPost: BlogPost
+}
+
+export async function getStaticPaths() {
+    return {
+        paths: allBlogPosts.map((post) => ({ params: { slug: post.slug } })),
+        fallback: false,
     }
+}
+
+export async function getStaticProps({ params }) {
+    const post: BlogPost = allBlogPosts.find(
+        (post) => post.slug === params.slug
+    );
+
+    const postIndex = allBlogPosts.sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date))
+      }).findIndex(post => post.slug === params.slug)
+    
+    const previousPost = allBlogPosts[postIndex + 1] || null
+    let nextPost = null;
+    if (postIndex !== 0) {
+        // Only assign nextPost if postIndex is not zero
+        nextPost = allBlogPosts[postIndex - 1] || null;
+      }
+
+    return {
+        props: {
+            post,
+            previousPost,
+            nextPost
+        },
+    };
 }
 
 const components = { Link, Image, Box, Typography, BlogImage }
 
-export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPost, nextPost }: PostProps) {
+export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
 
     const router = useRouter()
-    const postTitle = `${frontMatter.title}` || 'Regular Expressions Blog Post'
-    if (!router.isFallback && !slug) {
+    if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
+
+    const MdxContent = useMDXComponent(post.body.code)
+    const postTitle = `${post.title}` || 'Regular Expressions Blog Post'
     return (
         <Layout>
             <Container>
@@ -80,10 +83,10 @@ export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPos
                                 paddingBottom: "1rem",
                                 paddingTop: "0.5rem"
                             }}>
-                                {format(parseISO(frontMatter.date), "LLLL d, yyyy")}
+                                {format(parseISO(post.date), "LLLL d, yyyy")}
                             </Typography>
                         </Box>
-                        <MDXRemote {...mdxSource} components={components} />
+                        <MdxContent components={components} />
                     </>
                 )}
                 <Box mt={4}>
@@ -101,14 +104,14 @@ export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPos
                     }}>
                     <Box>
                         {previousPost && (
-                            <Link href={`/blog${previousPost.slug}`} rel="prev">
+                            <Link href={`/blog/${previousPost.slug}`} rel="prev">
                                 ← {previousPost.title}
                             </Link>
                         )}
                     </Box>
                     <Box>
                         {nextPost && (
-                            <Link href={`/blog${nextPost.slug}`} rel="next">
+                            <Link href={`/blog/${nextPost.slug}`} rel="next">
                                 {nextPost.title} →
                             </Link>
                         )}
@@ -118,44 +121,3 @@ export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPos
         </Layout>
     )
 }
-
-const getStaticPaths = async () => {
-    const posts = getAllPosts('content/_blog-posts', ['slug'])
-    const slugs = posts.map(post => post.slug)
-
-    const paths = slugs.map(s => ({
-        params: {
-            slug: s
-        }
-    }))
-
-    return {
-        paths,
-        fallback: false
-    }
-}
-
-const getStaticProps = async ({ params }: Params) => {
-    const allPosts = await getAllPosts('content/_blog-posts', ['slug', 'title'])
-    const postIndex = allPosts.findIndex(post => post.slug === params.slug)
-    const previousPost = allPosts[postIndex - 1] || null
-    const nextPost = allPosts[postIndex + 1] || null
-
-    const postFilePath = path.join('content/_blog-posts', `${params.slug}.mdx`);
-    const fileContents = fs.readFileSync(postFilePath, 'utf-8');
-    const { data: frontMatter, content } = matter(fileContents)
-
-    const mdxSource = await serialize(content)
-
-    return {
-        props: {
-            frontMatter,
-            slug: params.slug,
-            mdxSource,
-            previousPost,
-            nextPost
-        }
-    }
-}
-
-export { getStaticProps, getStaticPaths }

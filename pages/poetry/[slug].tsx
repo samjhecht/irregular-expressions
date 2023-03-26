@@ -1,63 +1,65 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import Link from '../../components/link'
 import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
-import { getPostBySlug, getAllPosts } from '../../lib/api'
 import Head from 'next/head'
-// import markdownToHtml from '../../lib/markdownToHtml'
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import Image from 'next/image';
-
-type FrontMatter = {
-    title: string;
-    date: string;
-    excerpt: string;
-    description: string;
-    thumbnailImage: {
-        src: string;
-        alt: string;
-    };
-    images: {
-        src: string;
-        alt: string;
-    }[];
-};
-
-type Items = {
-    [key: string]: string
-  }
-
-type PostProps = {
-    frontMatter: FrontMatter;
-    slug: string;
-    mdxSource: MDXRemoteSerializeResult;
-    previousPost: Items;
-    nextPost: Items;
-};
+import { compareDesc, format, parseISO } from "date-fns";
+import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
+import { useMDXComponent } from 'next-contentlayer/hooks'
 
 
-type Params = {
-    params: {
-        slug: string
+type PoetryPostProps = {
+    post: PoetryPost,
+    previousPost: PoetryPost,
+    nextPost: PoetryPost
+}
+
+export async function getStaticPaths() {
+    return {
+        paths: allPoetryPosts.map((post) => ({ params: { slug: post.slug } })),
+        fallback: false,
     }
+}
+
+export async function getStaticProps({ params }) {
+    const post: PoetryPost = allPoetryPosts.find(
+        (post) => post.slug === params.slug
+    );
+
+    const postIndex = allPoetryPosts.sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date))
+    }).findIndex(post => post.slug === params.slug)
+    
+    const previousPost = allPoetryPosts[postIndex + 1] || null
+    let nextPost = null;
+    if (postIndex !== 0) {
+        // Only assign nextPost if postIndex is not zero
+        nextPost = allPoetryPosts[postIndex - 1] || null;
+    }
+
+    return {
+        props: {
+            post,
+            previousPost,
+            nextPost
+        },
+    };
 }
 
 
 const components = { Link, Image, Box, Typography }
 
-export default function PoemTemplate({ frontMatter, slug, mdxSource, previousPost, nextPost }: PostProps) {
 
+export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPostProps) {
     const router = useRouter()
-    const postTitle = `${frontMatter.title}` || 'Regular Poetic Expression'
-    if (!router.isFallback && !slug) {
+    if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
+
+    const MdxContent = useMDXComponent(post.body.code)
+    const postTitle = `${post.title}` || 'Regular Poetic Expression'
     return (
         <Layout>
             <Container>
@@ -80,10 +82,10 @@ export default function PoemTemplate({ frontMatter, slug, mdxSource, previousPos
                                 paddingBottom: "1rem",
                                 paddingTop: "0.5rem"
                             }}>
-                                {frontMatter.date}
+                                {format(parseISO(post.date), "LLLL d, yyyy")}
                             </Typography>
                         </Box>
-                        <MDXRemote {...mdxSource} components={components} />
+                        <MdxContent components={components} />
                     </>
                 )}
                 <Box mt={4}>
@@ -101,14 +103,14 @@ export default function PoemTemplate({ frontMatter, slug, mdxSource, previousPos
                     }}>
                     <Box>
                         {previousPost && (
-                            <Link href={`/poetry${previousPost.slug}`} rel="prev">
+                            <Link href={`/poetry/${previousPost.slug}`} rel="prev">
                                 ← {previousPost.title}
                             </Link>
                         )}
                     </Box>
                     <Box>
                         {nextPost && (
-                            <Link href={`/poetry${nextPost.slug}`} rel="next">
+                            <Link href={`/poetry/${nextPost.slug}`} rel="next">
                                 {nextPost.title} →
                             </Link>
                         )}
@@ -118,44 +120,3 @@ export default function PoemTemplate({ frontMatter, slug, mdxSource, previousPos
         </Layout>
     )
 }
-
-const getStaticPaths = async () => {
-    const posts = getAllPosts('content/_poetry', ['slug'])
-    const slugs = posts.map(post => post.slug)
-
-    const paths = slugs.map(s => ({
-        params: {
-            slug: s
-        }
-    }))
-
-    return {
-        paths,
-        fallback: false
-    }
-}
-
-const getStaticProps = async ({ params }: Params) => {
-    const allPosts = await getAllPosts('content/_poetry', ['slug', 'title'])
-    const postIndex = allPosts.findIndex(post => post.slug === params.slug)
-    const previousPost = allPosts[postIndex - 1] || null
-    const nextPost = allPosts[postIndex + 1] || null
-
-    const postFilePath = path.join('content/_poetry', `${params.slug}.mdx`);
-    const fileContents = fs.readFileSync(postFilePath, 'utf-8');
-    const { data: frontMatter, content } = matter(fileContents)
-
-    const mdxSource = await serialize(content)
-
-    return {
-        props: {
-            frontMatter,
-            slug: params.slug,
-            mdxSource,
-            previousPost,
-            nextPost
-        }
-    }
-}
-
-export { getStaticProps, getStaticPaths }

@@ -2,43 +2,20 @@ import { List, ListItem, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Link from '../components/link';
-import { getAllPosts } from '../lib/api'
 import ThumbnailImage from '../components/blog-thumbnail-image';
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { format, parseISO } from "date-fns";
+import { compareDesc, format, parseISO } from "date-fns";
+import { allBlogPosts, BlogPost } from "contentlayer/generated";
 
-
-type FrontMatter = {
-    title: string;
-    date: string;
-    excerpt: string;
-    description: string;
-    thumbnailImage: {
-        src: string;
-        alt: string;
-    };
-    images: {
-        src: string;
-        alt: string;
-    }[];
-};
-
-type PostType = {
-    frontMatter: FrontMatter;
-    slug: string;
-    excerpt: string;
-};
-
-
-type Props = {
-    allBlogPosts: PostType[]
+export async function getStaticProps() {
+    const posts: BlogPost[] = allBlogPosts.sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date))
+    })
+    return { props: { posts } }
 }
 
-export default function Blog({ allBlogPosts }: Props) {
+export default function BlogHome({ posts }: { posts: BlogPost[] }) {
 
-    if (allBlogPosts.length === 0) {
+    if (posts.length === 0) {
         return (
             <Layout>
                 <Typography variant="body1">There are no blog posts yet.</Typography>
@@ -53,9 +30,9 @@ export default function Blog({ allBlogPosts }: Props) {
                     <title>{`Irregular Expressions Blog`}</title>
                 </Head>
                 <List>
-                    {allBlogPosts.map((post) => {
-                        const title = post.frontMatter.title || post.slug
-                        const blogDescription = post.frontMatter.description || post.excerpt
+                    {posts.map((post) => {
+                        const title = post.title || post.slug
+                        const blogDescription = post.description || null
 
                         return (
                             <ListItem
@@ -80,10 +57,7 @@ export default function Blog({ allBlogPosts }: Props) {
                                     <Stack>
                                         <Link
                                             href={'/blog/' + post.slug}
-                                            sx={{
-                                                color: 'primary.black',
-                                                textDecoration: 'none',
-                                            }}>
+                                            sx={{textDecoration: 'none'}}>
                                             <Typography
                                                 variant="h5"
                                                 sx={{ textDecoration: "none", fontWeight: 'bold' }}
@@ -91,12 +65,8 @@ export default function Blog({ allBlogPosts }: Props) {
                                                 {title}
                                             </Typography>
                                         </Link>
-                                        <Typography
-                                            color="text.black"
-                                            variant="body2"
-                                            sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}
-                                        >
-                                            {format(parseISO(post.frontMatter.date), "LLLL d, yyyy")}
+                                        <Typography sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}>
+                                            {format(parseISO(post.date), "LLLL d, yyyy")}
                                         </Typography>
                                         <Link
                                             href={'/blog/' + post.slug}
@@ -128,8 +98,8 @@ export default function Blog({ allBlogPosts }: Props) {
                                     }}
                                 >
                                     <ThumbnailImage
-                                        src={post.frontMatter.thumbnailImage.src}
-                                        title={post.frontMatter.title}
+                                        src={post.thumbnailImage}
+                                        title={post.title}
                                         slug={post.slug}
                                     />
                                 </Box>
@@ -140,26 +110,4 @@ export default function Blog({ allBlogPosts }: Props) {
             </Layout>
         </>
     )
-}
-
-export const getStaticProps = async () => {
-
-    const allPosts = await getAllPosts('content/_blog-posts', ['slug', 'title','date'])
-        .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
-
-    const allBlogPosts = allPosts.map(filename => {
-        const markdownWithMeta = fs.readFileSync(path.join('content/_blog-posts', `${filename.slug}.mdx`), 'utf-8')
-        const { data: frontMatter} = matter(markdownWithMeta);
-
-        return {
-            frontMatter,
-            slug: filename.slug
-        }
-    })
-
-    return {
-        props: {
-            allBlogPosts
-        }
-    }
 }

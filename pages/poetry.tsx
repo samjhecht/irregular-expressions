@@ -1,42 +1,24 @@
 import { List, ListItem, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
-import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import Link from '../components/link';
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 // import ThumbnailImage from '../components/blog-thumbnail-image';
+import { compareDesc, format, parseISO } from "date-fns";
+import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
 
-
-type FrontMatter = {
-    title: string;
-    date: string;
-    excerpt: string;
-    description: string;
-    thumbnailImage: {
-        src: string;
-        alt: string;
-    };
-    images: {
-        src: string;
-        alt: string;
-    }[];
-};
-
-type PostType = {
-    frontMatter: FrontMatter;
-    slug: string;
-};
-
-
-type Props = {
-    allPoems: PostType[]
+export async function getStaticProps() {
+    const posts: PoetryPost[] = allPoetryPosts.sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date))
+    })
+    return { props: { posts } }
 }
 
-export default function Poetry({ allPoems }: Props) {
+export default function Poetry({ posts }: { posts: PoetryPost[] }) {
 
-    if (allPoems.length === 0) {
+    if (posts.length === 0) {
         return (
             <Layout>
                 <Typography variant="body1">There are no poems yet.</Typography>
@@ -51,9 +33,9 @@ export default function Poetry({ allPoems }: Props) {
                     <title>{`Irregular Expressions Poetry`}</title>
                 </Head>
                 <List>
-                    {allPoems.map((poem) => {
-                        const title = poem.frontMatter.title || poem.slug
-                        const poemDescription = poem.frontMatter.description || poem.frontMatter.excerpt
+                    {posts.map((poem) => {
+                        const title = poem.title || poem.slug
+                        const poemDescription = poem.description || null
 
                         return (
                             <ListItem
@@ -94,7 +76,7 @@ export default function Poetry({ allPoems }: Props) {
                                             variant="body2"
                                             sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}
                                         >
-                                            {poem.frontMatter.date}
+                                            {format(parseISO(poem.date), "LLLL d, yyyy")}
                                         </Typography>
                                         <Link
                                             href={'/poetry/' + poem.slug}
@@ -142,27 +124,4 @@ export default function Poetry({ allPoems }: Props) {
             </Layout>
         </>
     )
-}
-
-export const getStaticProps = async () => {
-
-    const allPosts = await getAllPosts('content/_poetry', ['slug', 'title','date'])
-        .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
-
-    const allPoems = allPosts.map(filename => {
-        const markdownWithMeta = fs.readFileSync(path.join('content/_poetry', `${filename.slug}.mdx`), 'utf-8')
-        const { data: frontMatter } = matter(markdownWithMeta)
-
-        console.log(frontMatter)
-        return {
-            frontMatter,
-            slug: filename.slug
-        }
-    })
-
-    return {
-        props: {
-            allPoems
-        }
-    }
 }
