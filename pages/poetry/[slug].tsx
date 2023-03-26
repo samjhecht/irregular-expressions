@@ -23,7 +23,7 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: { params: { slug: string } }) {
     const post: PoetryPost = allPoetryPosts.find(
         (post) => post.slug === params.slug
     );
@@ -120,3 +120,4 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
         </Layout>
     )
 }
+
