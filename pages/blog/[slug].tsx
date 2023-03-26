@@ -12,6 +12,8 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import Image from 'next/image';
+import BlogImage from '../../components/BlogImage'
+import { format, parseISO } from "date-fns";
 
 type FrontMatter = {
     title: string;
@@ -47,7 +49,7 @@ type Params = {
     }
 }
 
-const components = { Link, Image, Box, Typography }
+const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPost, nextPost }: PostProps) {
 
@@ -78,7 +80,7 @@ export default function BlogTemplate({ frontMatter, slug, mdxSource, previousPos
                                 paddingBottom: "1rem",
                                 paddingTop: "0.5rem"
                             }}>
-                                {frontMatter.date}
+                                {format(parseISO(frontMatter.date), "LLLL d, yyyy")}
                             </Typography>
                         </Box>
                         <MDXRemote {...mdxSource} components={components} />

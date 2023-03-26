@@ -7,6 +7,7 @@ import ThumbnailImage from '../components/blog-thumbnail-image';
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { format, parseISO } from "date-fns";
 
 
 type FrontMatter = {
@@ -95,7 +96,7 @@ export default function Blog({ allBlogPosts }: Props) {
                                             variant="body2"
                                             sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}
                                         >
-                                            {post.frontMatter.date}
+                                            {format(parseISO(post.frontMatter.date), "LLLL d, yyyy")}
                                         </Typography>
                                         <Link
                                             href={'/blog/' + post.slug}

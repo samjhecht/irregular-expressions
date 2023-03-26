@@ -11,14 +11,13 @@ const Layout = ({ children }: Props) => {
   return (
     <>
     <Container 
-        maxWidth="lg"
+        maxWidth="md"
         style={{
           display: "flex",
           flexDirection: "column",
           minHeight: "100vh",
           margin: "0 auto",
           padding: "2.5rem 1.25rem",
-          maxWidth: "42rem",
           alignContent: "center",
           justifyContent: "center",
           alignItems: "center",

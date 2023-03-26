@@ -37,24 +37,6 @@ export const myFonts = localFont({
   fallback: ['system-ui', 'arial'],
 });
 
-//  const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: '#556cd6',
-//     },
-//     secondary: {
-//       main: '#19857b',
-//     },
-//     error: {
-//       main: red.A400,
-//     },
-//   },
-//   typography: {
-//     fontFamily: roboto.style.fontFamily,
-//   },
-// });
-
-
 // Create a theme instance.
 const theme = createTheme({
   palette: {
@@ -71,7 +53,6 @@ const theme = createTheme({
 
   typography: {
     fontFamily: myFonts.style.fontFamily,
-    // fontFamily: 'Vulf Sans, sans-serif',
   },
   components: {
     MuiCssBaseline: {
@@ -81,5 +62,8 @@ const theme = createTheme({
     },
   },
 });
+
+
+
 
 export default theme;
