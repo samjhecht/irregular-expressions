@@ -31,7 +31,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     const postIndex = allPoetryPosts.sort((a, b) => {
         return compareDesc(new Date(a.date), new Date(b.date))
     }).findIndex(post => post.slug === params.slug)
-    
+
     const previousPost = allPoetryPosts[postIndex + 1] || null
     let nextPost = null;
     if (postIndex !== 0) {
@@ -53,12 +53,23 @@ const components = { Link, Image, Box, Typography }
 
 
 export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPostProps) {
+
+
+    // Define a type guard to check if `post` is defined
+    function isPostDefined(post: PoetryPost | undefined): post is PoetryPost {
+        return post !== undefined;
+    }
+
     const router = useRouter()
-    if (!router.isFallback && !post.slug) {
+    if (!router.isFallback && !isPostDefined(post)) {
         return <ErrorPage statusCode={404} />
     }
 
-    const MdxContent = useMDXComponent(post.body.code)
+    // const MdxContent = useMDXComponent(post.body.code)
+    let MdxContent = null;
+    if (isPostDefined(post)) {
+        MdxContent = useMDXComponent(post.body.code)
+    }
     const postTitle = `${post.title}` || 'Regular Poetic Expression'
     return (
         <Layout>

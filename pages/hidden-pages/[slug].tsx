@@ -52,12 +52,21 @@ const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function BlogTemplate({ post, previousPost, nextPost }: HiddenPageProps) {
 
+    // Define a type guard to check if `post` is defined
+    function isPostDefined(post: HiddenPage | undefined): post is HiddenPage {
+        return post !== undefined;
+    }
+
     const router = useRouter()
-    if (!router.isFallback && !post.slug) {
+    if (!router.isFallback && !isPostDefined(post)) {
         return <ErrorPage statusCode={404} />
     }
 
-    const MdxContent = useMDXComponent(post.body.code)
+    // const MdxContent = useMDXComponent(post.body.code)
+    let MdxContent = null;
+    if (isPostDefined(post)) {
+        MdxContent = useMDXComponent(post.body.code)
+    }
     const postTitle = `${post.title}` || 'Hidden Regular Expressions Page'
     return (
         <Layout>
