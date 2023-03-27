@@ -37,7 +37,7 @@ export default function PoetryWaterfall() {
                         <br />
                         Hoping the stars know
                         <br />
-                        It's time to shine...
+                        It&apos;s time to shine...
                         <br />
                         <br />
                     </p>

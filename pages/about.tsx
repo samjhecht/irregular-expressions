@@ -20,7 +20,7 @@ export default function About() {
         <Grid item xs={12} sm={7}>
           <Stack direction="column" spacing={4}>
             <Typography variant="body1">
-              Welcome to Irregular-Expressions.com!&nbsp;&nbsp; I'm <strong>Julius Hecht</strong>.&nbsp;&nbsp;
+              Welcome to Irregular-Expressions.com!&nbsp;&nbsp; I&apos;m <strong>Julius Hecht</strong>.&nbsp;&nbsp;
               I made this site so I could publish my poetry and other stuff I feel like writing.&nbsp;&nbsp;
               Now, please excuse me while I express myself.
               {` `}

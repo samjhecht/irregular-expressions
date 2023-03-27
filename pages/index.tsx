@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Typography, Box, Container } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import Layout from "../components/layout";
 
 export default function Home() {
@@ -27,7 +26,7 @@ export default function Home() {
           <br />
           Hoping the stars know
           <br />
-          It's time to shine...
+          It&apos;s time to shine...
           <br />
           <br />
         </Typography>
