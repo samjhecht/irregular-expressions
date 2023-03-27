@@ -16,6 +16,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@opentelemetry/api": "^1.4.1",
     "contentlayer": "^0.3.0",
     "date-fns": "^2.29.3",
     "gray-matter": "^4.0.3",
