@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Typography, Box, Container } from '@mui/material';
+import { Typography } from '@mui/material';
 import Layout from "../components/layout";
 import { useEffect } from 'react';
 import styles from '../src/custom-styles/poetryfall.module.css';

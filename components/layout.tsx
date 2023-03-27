@@ -1,7 +1,6 @@
 import Header from "./header";
 import StickyFooter from "./stickyfooter";
-import { ReactNode } from "react";
-import { Typography, Box, Stack, Container } from '@mui/material';
+import { Container } from '@mui/material';
 
 type Props = {
     children: React.ReactNode

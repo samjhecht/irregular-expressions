@@ -2,10 +2,6 @@ import { List, ListItem, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Link from '../components/link';
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-// import ThumbnailImage from '../components/blog-thumbnail-image';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
 

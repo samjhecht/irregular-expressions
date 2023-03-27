@@ -1,7 +1,6 @@
 import { ImageProps } from 'next/image';
 import { Box } from '@mui/material';
 import Image from 'next/image';
-import Link from '../components/link';
 import styled from 'styled-components';
 
 const StyledImageFigcaption = styled.figcaption`

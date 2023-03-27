@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import { notFound } from 'next/navigation';
+// import { notFound } from 'next/navigation';
 import Link from '../../components/link'
 import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
