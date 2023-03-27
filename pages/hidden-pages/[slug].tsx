@@ -51,13 +51,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function HiddenPageTemplate({ post, previousPost, nextPost }: HiddenPageProps) {
+    
+    const MdxContent = useMDXComponent(post?.body.code)
 
     const router = useRouter()
     if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
-
-    const MdxContent = useMDXComponent(post?.body.code)
 
     const postTitle = `${post.title}` || 'Hidden Regular Expressions Page'
     return (

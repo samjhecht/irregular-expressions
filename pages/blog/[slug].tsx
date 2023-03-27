@@ -55,13 +55,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
+    
+    const MdxContent = useMDXComponent(post?.body.code)
 
     const router = useRouter()
     if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
-
-    const MdxContent = useMDXComponent(post?.body.code)
 
     const postTitle = `${post?.title}` || 'Regular Expressions Blog Post'
     return (
