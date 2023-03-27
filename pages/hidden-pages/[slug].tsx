@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-    const post: HiddenPage = allHiddenPages.find(
+    const post = allHiddenPages.find(
         (post) => post.slug === params.slug
     );
 

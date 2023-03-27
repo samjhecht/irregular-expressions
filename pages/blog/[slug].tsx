@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
+import { notFound } from 'next/navigation';
 import Link from '../../components/link'
 import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
@@ -27,7 +28,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
     
-    const post: BlogPost = allBlogPosts.find(
+    const post = allBlogPosts.find(
         (post) => post.slug === params.slug
     );
 
@@ -55,13 +56,18 @@ const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
 
+    // Define a type guard to check if `post` is defined
+    function isPostDefined(post: BlogPost | undefined): post is BlogPost {
+        return post !== undefined;
+    }
+
     const router = useRouter()
-    if (!router.isFallback && !post.slug) {
+    if (!router.isFallback && !isPostDefined(post)) {
         return <ErrorPage statusCode={404} />
     }
 
     const MdxContent = useMDXComponent(post.body.code)
-    const postTitle = `${post.title}` || 'Regular Expressions Blog Post'
+    const postTitle = `${post?.title}` || 'Regular Expressions Blog Post'
     return (
         <Layout>
             <Container>
