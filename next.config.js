@@ -9,13 +9,12 @@ const nextConfig = {
     appDir: false,
   },
   // webpack: (config, { isServer }) => {
-  //   if (!isServer) {
-  //     require('./scripts/sitemap.mjs')
-  //     require('./scripts/rss.mjs')
+  //   if (isServer) {
+  //     require('./scripts/generate-sitemap')
   //   }
+
   //   return config
   // },
-  // reactStrictMode: true,
 };
 
 module.exports = withContentlayer(nextConfig);
