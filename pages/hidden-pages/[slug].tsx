@@ -50,7 +50,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
 const components = { Link, Image, Box, Typography, BlogImage }
 
-export default function BlogTemplate({ post, previousPost, nextPost }: HiddenPageProps) {
+export default function HiddenPageTemplate({ post, previousPost, nextPost }: HiddenPageProps) {
 
     // Define a type guard to check if `post` is defined
     function isPostDefined(post: HiddenPage | undefined): post is HiddenPage {
@@ -62,11 +62,8 @@ export default function BlogTemplate({ post, previousPost, nextPost }: HiddenPag
         return <ErrorPage statusCode={404} />
     }
 
-    // const MdxContent = useMDXComponent(post.body.code)
-    let MdxContent = null;
-    if (isPostDefined(post)) {
-        MdxContent = useMDXComponent(post.body.code)
-    }
+    const MdxContent = useMDXComponent(post?.body.code)
+
     const postTitle = `${post.title}` || 'Hidden Regular Expressions Page'
     return (
         <Layout>

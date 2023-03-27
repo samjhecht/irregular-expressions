@@ -65,11 +65,8 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
         return <ErrorPage statusCode={404} />
     }
 
-    // const MdxContent = useMDXComponent(post.body.code)
-    let MdxContent = null;
-    if (isPostDefined(post)) {
-        MdxContent = useMDXComponent(post.body.code)
-    }
+    const MdxContent = useMDXComponent(post?.body.code)
+
     const postTitle = `${post.title}` || 'Regular Poetic Expression'
     return (
         <Layout>
