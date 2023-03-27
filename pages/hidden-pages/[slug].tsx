@@ -52,13 +52,8 @@ const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function HiddenPageTemplate({ post, previousPost, nextPost }: HiddenPageProps) {
 
-    // Define a type guard to check if `post` is defined
-    function isPostDefined(post: HiddenPage | undefined): post is HiddenPage {
-        return post !== undefined;
-    }
-
     const router = useRouter()
-    if (!router.isFallback && !isPostDefined(post)) {
+    if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
 

@@ -56,17 +56,13 @@ const components = { Link, Image, Box, Typography, BlogImage }
 
 export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
 
-    // Define a type guard to check if `post` is defined
-    function isPostDefined(post: BlogPost | undefined): post is BlogPost {
-        return post !== undefined;
-    }
-
     const router = useRouter()
-    if (!router.isFallback && !isPostDefined(post)) {
+    if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
 
     const MdxContent = useMDXComponent(post?.body.code)
+
     const postTitle = `${post?.title}` || 'Regular Expressions Blog Post'
     return (
         <Layout>

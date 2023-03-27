@@ -54,14 +54,8 @@ const components = { Link, Image, Box, Typography }
 
 export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPostProps) {
 
-
-    // Define a type guard to check if `post` is defined
-    function isPostDefined(post: PoetryPost | undefined): post is PoetryPost {
-        return post !== undefined;
-    }
-
     const router = useRouter()
-    if (!router.isFallback && !isPostDefined(post)) {
+    if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
 
