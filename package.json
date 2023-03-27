@@ -41,7 +41,9 @@
     "@types/styled-components": "^5.1.26",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "typescript": "latest",
-    "globby": "^11.0.1"
+    "eslint-config-prettier": "^8.8.0",
+    "globby": "^11.0.1",
+    "prettier": "^2.8.7",
+    "typescript": "latest"
   }
 }
