@@ -66,7 +66,7 @@ export const HiddenPage = defineDocumentType(() => ({
         title: { type: 'string', required: true },
         date: { type: 'string', required: true },
         description: { type: 'string', required: false },
-        thumbnailImage: { type: 'string', required: false },
+        thumbnailImage: { type: 'string', required: true },
         status: { type: 'string', required: false }
     },
     computedFields: {
