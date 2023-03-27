@@ -54,12 +54,12 @@ const components = { Link, Image, Box, Typography }
 
 export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPostProps) {
 
+    const MdxContent = useMDXComponent(post?.body.code)
+
     const router = useRouter()
     if (!router.isFallback && !post.slug) {
         return <ErrorPage statusCode={404} />
     }
-
-    const MdxContent = useMDXComponent(post?.body.code)
 
     const postTitle = `${post.title}` || 'Regular Poetic Expression'
     return (
