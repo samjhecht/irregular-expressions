@@ -3,52 +3,11 @@ import globby from 'globby';
 import prettier from 'prettier';
 
 async function generate() {
-    // const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
-    // const pages = await globby([
-    //     'pages/*.js',
-    //     'pages/*.tsx',
-    //     'content/**/*.mdx',
-    //     '!data/*.mdx',
-    //     '!pages/_*.js',
-    //     '!pages/_*.tsx',
-    //     '!pages/api',
-    //     '!pages/404.js',
-    //     '!pages/404.tsx',
-    // ]);
-
-    // const sitemap = `
-    // <?xml version="1.0" encoding="UTF-8"?>
-    // <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    //     ${pages
-    //         .map((page) => {
-    //             const path = page
-    //                 .replace('pages', '')
-    //                 .replace('data', '')
-    //                 .replace('.js', '')
-    //                 .replace('.mdx', '');
-    //             const route = path === '/index' ? '' : path;
-
-    //             return `
-    //           <url>
-    //             <loc>${`${process.env.WEBSITE_URL}${route}`}</loc>
-    //           </url>
-    //         `;
-    //         })
-    //         .join('')}
-    // </urlset>
-    // `;
-
-    // const formatted = prettier.format(sitemap, {
-    //     ...prettierConfig,
-    //     parser: 'html',
-    // });
-
-    // // eslint-disable-next-line no-sync
-    // writeFileSync('public/sitemap.xml', formatted);
 
     const pages = await globby([
         'pages/*.tsx',
         'content/**/*.mdx',
+        '!content/_hidden-pages/*.mdx',
         '!pages/_*.tsx',
       ])
       
@@ -57,6 +16,8 @@ async function generate() {
           file
             .replace('pages', '')
             .replace('content', '')
+            .replace('_blog-posts', 'blog')
+            .replace('_poetry', 'poetry')
             .replace('.tsx', '')
             .replace('.mdx', '')
         )
@@ -64,11 +25,13 @@ async function generate() {
         .map(
           (path) => `
             <url>
-                <loc>localhost:3000${path}</loc>
+                <loc>${process.env.WEBSITE_URL}${path}</loc>
             </url>
           `
         )
         .join('')
+
+        console.log(urlTags)
       
       const sitemap = `
         <?xml version="1.0" encoding="UTF-8"?>
