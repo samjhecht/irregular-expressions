@@ -1,10 +1,13 @@
-import { List, ListItem, Stack, Typography, Box } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { List, ListItem, Button, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Link from '../components/link';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
 import PoetryThumbnailImage from '../components/PoetryThumbnail';
+
+const PAGE_SIZE = 10;
 
 export async function getStaticProps() {
     const posts: PoetryPost[] = allPoetryPosts.sort((a, b) => {
@@ -14,14 +17,35 @@ export async function getStaticProps() {
 }
 
 export default function Poetry({ posts }: { posts: PoetryPost[] }) {
+    const [visiblePosts, setVisiblePosts] = useState<PoetryPost[]>([]);
+    const [numVisible, setNumVisible] = useState(PAGE_SIZE);
+  
+    useEffect(() => {
+      setVisiblePosts(posts.slice(0, numVisible));
+    }, [numVisible, posts]);
 
-    if (posts.length === 0) {
+    const handleShowMore = () => {
+        const numPosts = posts.length;
+        const remainingPosts = numPosts - numVisible;
+        const numToAdd = Math.min(PAGE_SIZE, remainingPosts);
+        setNumVisible(numVisible + numToAdd);
+      };
+      
+      const showMoreButton = posts.length > visiblePosts.length && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2rem' }}>
+          <Button variant="outlined" onClick={handleShowMore}>
+            Show More Poems
+          </Button>
+        </Box>
+      );
+
+    if (visiblePosts.length === 0) {
         return (
-            <Layout>
-                <Typography variant="body1">There are no poems yet.</Typography>
-            </Layout>
-        )
-    }
+          <Layout>
+            <Typography variant="body1">There are no poems yet.</Typography>
+          </Layout>
+        );
+      }
 
     return (
         <>
@@ -30,7 +54,7 @@ export default function Poetry({ posts }: { posts: PoetryPost[] }) {
                     <title>{`Irregular Expressions Poetry`}</title>
                 </Head>
                 <List>
-                    {posts.map((poem) => {
+                    {visiblePosts.map((poem) => {
                         const title = poem.title || poem.slug
                         const poemDescription = poem.description || null
 
@@ -116,6 +140,7 @@ export default function Poetry({ posts }: { posts: PoetryPost[] }) {
                         )
                     })}
                 </List>
+                {showMoreButton}
             </Layout>
         </>
     )
