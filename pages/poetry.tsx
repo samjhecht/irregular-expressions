@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Link from '../components/link';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
+import PoetryThumbnailImage from '../components/PoetryThumbnail';
 
 export async function getStaticProps() {
     const posts: PoetryPost[] = allPoetryPosts.sort((a, b) => {
@@ -88,31 +89,29 @@ export default function Poetry({ posts }: { posts: PoetryPost[] }) {
                                         </Link>
                                     </Stack>
                                 </Box>
-                                {/* for right now i'm leaving this in in case i want to get creative
-                                and have the poetry page have some kind of color or images down the line.
-                                I figure it shouldn't really cause any issues since the poetry list 
-                                items don't take up the whole width anyway.  */}
-                                <Box
-                                    width="30%"
-                                    height="100%"
-                                    sx={{
-                                        width: '30%',
-                                        display: {
-                                            xs: 'none',
-                                            sm: 'none',
-                                            md: 'flex',
-                                            lg: 'flex',
-                                            xl: 'flex',
-                                        },
-                                        marginLeft: '0.5rem',
-                                    }}
-                                >
-                                    {/* <ThumbnailImage
-                                        src={poem.frontMatter.thumbnailImage.src}
-                                        title={poem.frontMatter.title}
-                                        slug={poem.slug}
-                                    /> */}
-                                </Box>
+                                {poem.thumbnailImage && (
+                                    <Box
+                                        width="30%"
+                                        height="100%"
+                                        sx={{
+                                            width: '30%',
+                                            display: {
+                                                xs: 'none',
+                                                sm: 'none',
+                                                md: 'flex',
+                                                lg: 'flex',
+                                                xl: 'flex',
+                                            },
+                                            marginLeft: '0.5rem',
+                                        }}
+                                    >
+                                        <PoetryThumbnailImage
+                                            src={poem.thumbnailImage}
+                                            title={poem.title}
+                                            slug={poem.slug}
+                                        />
+                                    </Box>
+                                )}
                             </ListItem>
                         )
                     })}

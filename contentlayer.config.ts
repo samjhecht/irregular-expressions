@@ -40,7 +40,8 @@ export const PoetryPost = defineDocumentType(() => ({
     fields: {
         title: { type: 'string', required: true },
         date: { type: 'string', required: true },
-        description: { type: 'string', required: false }
+        description: { type: 'string', required: false },
+        thumbnailImage: { type: 'string', required: false }
     },
     computedFields: {
         readingTime: {
