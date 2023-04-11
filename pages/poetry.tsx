@@ -9,19 +9,40 @@ import PoetryThumbnailImage from '../components/PoetryThumbnail';
 
 const PAGE_SIZE = 10;
 
-export async function getStaticProps() {
-    const posts: PoetryPost[] = allPoetryPosts.sort((a, b) => {
-        return compareDesc(new Date(a.date), new Date(b.date))
-    })
-    return { props: { posts } }
+type PoetryPostFrontMatter = {
+    title: string
+    date: string
+    description?: string | null
+    thumbnailImage?: string | null
+    slug: string
 }
 
-export default function Poetry({ posts }: { posts: PoetryPost[] }) {
-    const [visiblePosts, setVisiblePosts] = useState<PoetryPost[]>([]);
+type Props = {
+    posts: PoetryPostFrontMatter[];
+};
+
+export async function getStaticProps(): Promise<{ props: Props }> {
+    const posts: PoetryPostFrontMatter[] = allPoetryPosts.map((post) => {
+        return {
+            title: post.title,
+            date: post.date,
+            description: post.description || null,
+            thumbnailImage: post.thumbnailImage || null,
+            slug: post.slug,
+        };
+    }).sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date));
+    });
+
+    return { props: { posts } };
+}
+
+export default function Poetry({ posts }: Props) {
+    const [visiblePosts, setVisiblePosts] = useState<PoetryPostFrontMatter[]>([]);
     const [numVisible, setNumVisible] = useState(PAGE_SIZE);
-  
+
     useEffect(() => {
-      setVisiblePosts(posts.slice(0, numVisible));
+        setVisiblePosts(posts.slice(0, numVisible));
     }, [numVisible, posts]);
 
     const handleShowMore = () => {
@@ -29,23 +50,23 @@ export default function Poetry({ posts }: { posts: PoetryPost[] }) {
         const remainingPosts = numPosts - numVisible;
         const numToAdd = Math.min(PAGE_SIZE, remainingPosts);
         setNumVisible(numVisible + numToAdd);
-      };
-      
-      const showMoreButton = posts.length > visiblePosts.length && (
+    };
+
+    const showMoreButton = posts.length > visiblePosts.length && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2rem' }}>
-          <Button variant="outlined" onClick={handleShowMore}>
-            Show More Poems
-          </Button>
+            <Button variant="outlined" onClick={handleShowMore}>
+                Show More Poems
+            </Button>
         </Box>
-      );
+    );
 
     if (visiblePosts.length === 0) {
         return (
-          <Layout>
-            <Typography variant="body1">There are no poems yet.</Typography>
-          </Layout>
+            <Layout>
+                <Typography variant="body1">There are no poems yet.</Typography>
+            </Layout>
         );
-      }
+    }
 
     return (
         <>
