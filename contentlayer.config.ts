@@ -6,7 +6,6 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
 import rehypePrism from 'rehype-prism-plus'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
-// import rehypePrettyCode from 'rehype-pretty-code'
 
 export const BlogPost = defineDocumentType(() => ({
     name: 'BlogPost',
@@ -16,7 +15,7 @@ export const BlogPost = defineDocumentType(() => ({
         title: { type: 'string', required: true },
         date: { type: 'string', required: true },
         description: { type: 'string', required: false },
-        thumbnailImage: { type: 'string', required: true }
+        thumbnailImage: { type: 'string', required: true },
     },
     computedFields: {
         readingTime: {
@@ -95,7 +94,6 @@ export default makeSource({
         rehypePlugins: [
             rehypeSlug,
             rehypePrism,
-            // rehypePrettyCode,
             rehypeCodeTitles,
             [
                 rehypeAutolinkHeadings,

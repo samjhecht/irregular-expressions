@@ -12,7 +12,6 @@ import { compareDesc, format, parseISO } from "date-fns";
 import { allBlogPosts, BlogPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
-
 type BlogPostProps = {
     post: BlogPost,
     previousPost: BlogPost,
@@ -66,7 +65,7 @@ export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostP
     const postTitle = `${post?.title}` || 'Regular Expressions Blog Post'
     return (
         <Layout>
-            <Container>
+            <Container maxWidth="md">
                 {router.isFallback ? (
                     <Typography>Loading…</Typography>
                 ) : (

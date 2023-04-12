@@ -52,7 +52,7 @@ In this post, I'll walk you through some steps you can follow to make your own "
 Now that you've downloaded all of Wikipedia, you can sleep easy knowing that, even if you forget to pay your internet bill, you'll still be able to read about how the theory of evolution was actually independently conceived by Alfred Russel Wallace even though Charles Darwin is the one who gets all the credit:
 
 <BlogImage
-    src="/static/images/wikipedia-evolution.png"
+    src="/static/images/blog-wikipedia-evolution.webp"
     alt="Poor Alfred..."
     width={600}
     height={300}
@@ -66,7 +66,7 @@ Now, as I mentioned before, you decide you want to be able to automatically keep
 
 If you're comfortable running a python script, here's one you can use to automate this process:
 
-```python
+``` python title="wikipedia_zim_downloader.py"
 import os
 import re
 import shutil
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 
 You could also download the `.xml` version straight from the Wikimedia downloads page, but you'll need to add logic to convert the file to a `.zim` version that Kiwix can read.   This is doable with a couple extra libraries but will require quite a bit more memory during the conversion process:
 
-```python
+``` python
 import mwxml
 from zimply import create_new_zim
 
