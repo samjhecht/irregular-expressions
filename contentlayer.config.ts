@@ -6,6 +6,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
 import rehypePrism from 'rehype-prism-plus'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
+// import rehypePrettyCode from 'rehype-pretty-code'
 
 export const BlogPost = defineDocumentType(() => ({
     name: 'BlogPost',
@@ -94,6 +95,7 @@ export default makeSource({
         rehypePlugins: [
             rehypeSlug,
             rehypePrism,
+            // rehypePrettyCode,
             rehypeCodeTitles,
             [
                 rehypeAutolinkHeadings,
