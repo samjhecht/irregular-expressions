@@ -63,7 +63,7 @@ If so, you're probably going to prefer to automate all this programmatically.  B
 
 If you're comfortable running a python script, here's one you can use to automate this process:
 
-```python
+``` python
 import os
 import re
 import shutil
@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
 You could also download the `.xml` version straight from the Wikimedia downloads page, but you'll need to add logic to convert the file to a `.zim` version that Kiwix can read.   This is doable with a couple extra libraries but will require quite a bit more memory during the conversion process:
 
-```python
+``` python
 import mwxml
 from zimply import create_new_zim
 

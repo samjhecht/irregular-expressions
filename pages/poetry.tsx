@@ -4,7 +4,7 @@ import Layout from '../components/layout'
 import Head from 'next/head'
 import Link from '../components/link';
 import { compareDesc, format, parseISO } from "date-fns";
-import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
+import { allPoetryPosts } from "contentlayer/generated";
 import PoetryThumbnailImage from '../components/PoetryThumbnail';
 
 const PAGE_SIZE = 10;
