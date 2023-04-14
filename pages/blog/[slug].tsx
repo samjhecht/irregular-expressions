@@ -1,13 +1,10 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-// import { notFound } from 'next/navigation';
 import Link from '../../components/link'
 import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
-// import { getPostBySlug, getAllPosts } from '../../lib/api'
 import Head from 'next/head'
 import Image from 'next/image';
-import BlogImage from '../../components/BlogImage'
 import { compareDesc, format, parseISO } from "date-fns";
 import { allBlogPosts, BlogPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
@@ -53,7 +50,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 }
 
-const components = { Link, Image, Box, Typography, BlogImage, MdxImage, MdxCodeBlock }
+const components = { Link, Image, Box, Typography, MdxImage, MdxCodeBlock }
 
 export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
     

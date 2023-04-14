@@ -5,10 +5,10 @@ import Layout from '../../components/layout'
 import { Container, Box, Stack, Typography, Divider } from '@mui/material';
 import Head from 'next/head'
 import Image from 'next/image';
-import BlogImage from '../../components/BlogImage'
 import { compareDesc, format, parseISO } from "date-fns";
 import { allHiddenPages, HiddenPage } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
+import MdxImage from '../../components/MdxImage/MdxImage'
 
 type HiddenPageProps = {
     post: HiddenPage,
@@ -48,7 +48,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 }
 
-const components = { Link, Image, Box, Typography, BlogImage }
+const components = { Link, Image, Box, Typography, MdxImage }
 
 export default function HiddenPageTemplate({ post, previousPost, nextPost }: HiddenPageProps) {
     
