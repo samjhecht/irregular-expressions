@@ -124,14 +124,14 @@ export default makeSource({
             //         },
             //     },
             // ],
-            [
-                rehypeAutolinkHeadings,
-                {
-                    properties: {
-                        className: ['anchor'],
-                    },
-                },
-            ],
+            // [
+            //     rehypeAutolinkHeadings,
+            //     {
+            //         properties: {
+            //             className: ['anchor'],
+            //         },
+            //     },
+            // ],
             rehypeAccessibleEmojis,
         ],
     },
