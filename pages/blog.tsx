@@ -2,7 +2,7 @@ import { List, ListItem, Stack, Typography, Box } from '@mui/material';
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Link from '../components/link';
-import ThumbnailImage from '../components/blog-thumbnail-image';
+import ThumbnailImage from '../components/ThumbnailImage';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allBlogPosts, BlogPost } from "contentlayer/generated";
 

@@ -11,20 +11,18 @@ A year or so ago it came to my attention that all of English-language Wikipedia 
 
 As it happened, I already had a Samsung USB flash drive handy.   It *only* has a 256 GB capacity, but that should be more than enough.  Less than 15 minutes later, I was holding "the largest and most-read reference work in history" in the palm of my hand.  Here's a visual aid to give you a sense of what that looked like:
 
-<BlogImage
+<MdxImage
     src="/static/images/blog-me-and-wikipedia.webp"
     alt="Me and Wikipedia."
-    width={400}
-    height={500}
+    figcaption="Me and Wikipedia."
 />
 
 Alternatively, you could start wearing the largest and most-read reference work in history on a chain around your neck like Frodo and the Ring of Power:
 
-<BlogImage
+<MdxImage
     src="/static/images/blog-necklace-of-knowledge.webp"
     alt="Necklace of Knowledge(TM)."
-    width={400}
-    height={500}
+	figcaption="Necklace of Knowledge(TM)."
 />
 
 In this post, I'll walk you through some steps you can follow to make your own "Necklace of Knowledge" with just a few clicks.   At the end of the post, we'll also walk through how you can begin maintaining your own offline copy of Wikipedia using a simple Python program to automate keeping your copy up to date.   But first, let's start by just getting all of Wikipedia into the palm of your hand as quickly as possible.   It's as simple as following the steps below:
@@ -51,92 +49,10 @@ In this post, I'll walk you through some steps you can follow to make your own "
 
 Now that you've downloaded all of Wikipedia, you can sleep easy knowing that, even if you forget to pay your internet bill, you'll still be able to read about how the theory of evolution was actually independently conceived by Alfred Russel Wallace even though Charles Darwin is the one who gets all the credit:
 
-<BlogImage
+<MdxImage
     src="/static/images/blog-wikipedia-evolution.webp"
     alt="Poor Alfred..."
-    width={600}
-    height={300}
+	figcaption="Poor Alfred..."
 />
 
 For good measure, I also went ahead and saved a copy of the the Kiwix reader download on my flash drive as well.  If we're going to carry around all of Wikipedia on a flash drive, might as well include a backup copy of the offline reader so that's always handy even when we don't have internet access. 
-
-## Getting Programmatic With It
-
-Now, as I mentioned before, you decide you want to be able to automatically keep your offline copy of Wikipedia up to date.  For example, perhaps you don't have time to regularly drive all the way out to your doomsday bunker to download an updated copy manually?   Or maybe you need a way to programmatically keep your personal, semi-benevolent large language model (LLM) AI trained on the latest version of human knowledge?
-
-If you're comfortable running a python script, here's one you can use to automate this process:
-
-``` python title="wikipedia_zim_downloader.py"
-import os
-import re
-import shutil
-import tempfile
-import requests
-from bs4 import BeautifulSoup
-
-def download_latest_wikipedia_zim(language_code, dump_dir):
-	url = f'https://download.kiwix.org/zim/wikipedia/'
-	soup = BeautifulSoup(requests.get(url).text, 'html.parser')
-	links = []
-
-	for link in soup.find_all('a'):
-
-		href = link.get('href')
-		if href and href.endswith('.zim') and language_code in href:
-			links.append(href)
-
-	latest_link = max(links, key=lambda link: re.search(fr'^wikipedia_{language_code}_all_maxi_\d{{4}}-\d{{2}}\.zim', link).group(0) if re.search(r'^wikipedia_en_all_maxi_\d{4}-\d{2}\.zim', link) else '')
-	zim_url = url + latest_link
-
-	if latest_link:
-		print(f'Found new zim file called {latest_link} at {zim_url}. Downloading...')
-		with requests.get(zim_url, stream=True) as response:
-			with tempfile.NamedTemporaryFile(delete=False, dir=dump_dir) as zim_file:
-				shutil.copyfileobj(response.raw, zim_file)
-				print(f'ZIM file downloaded to {zim_file.name}')
-			return zim_file.name
-
-	else:
-		print('No new zim file found')
-		return None
-
-
-if __name__ == '__main__':
-	language_code = 'en'
-	dump_dir = '/Volumes/SamsungUSB' # change this to the mount point of your USB drive or whatever other directory you might want to save things in.
-	previous_zim_pattern = re.compile(fr'^wikipedia_{language_code}_all_maxi_\d{{4}}-\d{{2}}\.zim')
-
-	# download latest Wikipedia ZIM file
-	zim_file_path = download_latest_wikipedia_zim(language_code, dump_dir)
-
-	# delete previous ZIM files once the new download is complete.
-	if os.path.exists(zim_file_path):
-		for file_name in os.listdir(dump_dir):
-			if previous_zim_pattern.match(file_name) and language_code in file_name:
-				os.remove(os.path.join(dump_dir, file_name))
-				print(f'Deleted previous ZIM file {file_name}')
-	else:
-		print('ZIM file download failed, previous versions were not deleted')
-```
-
-You could also download the `.xml` version straight from the Wikimedia downloads page, but you'll need to add logic to convert the file to a `.zim` version that Kiwix can read.   This is doable with a couple extra libraries but will require quite a bit more memory during the conversion process:
-
-``` python
-import mwxml
-from zimply import create_new_zim
-
-
-def download_wikipedia_dump(language_code, dump_dir):
-	dump_url = f'https://dumps.wikimedia.org/{language_code}wiki/latest/{language_code}wiki-latest-pages-articles-multistream.xml.bz2'
-	with requests.get(dump_url, stream=True) as response:
-		with tempfile.NamedTemporaryFile(delete=False, dir=dump_dir) as dump_file:
-			shutil.copyfileobj(response.raw, dump_file)
-	return dump_file.name
-
-def create_zim_file(dump_file_path, zim_file_path):
-	with mwxml.Dump.from_file(open(dump_file_path, 'rb')) as dump:
-		with create_new_zim(zim_file_path) as zim_writer:
-			for page in dump:
-				if not page.redirect and not page.title.startswith('File:'):
-					zim_writer.add_article(page.title, page.text)
-```

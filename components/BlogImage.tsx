@@ -20,15 +20,15 @@ const BlogImage = (props: ImageProps) => {
     return (
         <Box 
             component="figure" 
+            display="flex"
             sx={{
-                display: "flex",
                 flexDirection: "column",
                 alignContent: "center",
                 justifyContent: "center",
                 alignItems: "center",
                 }}
                 >
-            <Image
+            <img
                 src={props.src}
                 alt={`Cover Image for ${props.title}`}
                 width={props.width}
