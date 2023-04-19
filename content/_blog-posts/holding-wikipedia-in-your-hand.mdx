@@ -19,6 +19,8 @@ As it happened, I already had a Samsung USB flash drive handy.   It *only* has a
 
 Alternatively, you could start wearing the largest and most-read reference work in history on a chain around your neck like Frodo and the Ring of Power:
 
+
+
 <MdxImage
     src="/static/images/blog-necklace-of-knowledge.webp"
     alt="Necklace of Knowledge(TM)."
@@ -118,3 +120,25 @@ if __name__ == '__main__':
 </MdxCodeBlock>
 
 You could also download the `.xml` version straight from the Wikimedia downloads page, but you'll need to add logic to convert the file to a `.zim` version that Kiwix can read.   This is doable with a couple extra libraries but will require quite a bit more memory during the conversion process:
+
+<MdxCodeBlock language="python">
+``` python
+import mwxml
+from zimply import create_new_zim
+
+
+def download_wikipedia_dump(language_code, dump_dir):
+	dump_url = f'https://dumps.wikimedia.org/{language_code}wiki/latest/{language_code}wiki-latest-pages-articles-multistream.xml.bz2'
+	with requests.get(dump_url, stream=True) as response:
+		with tempfile.NamedTemporaryFile(delete=False, dir=dump_dir) as dump_file:
+			shutil.copyfileobj(response.raw, dump_file)
+	return dump_file.name
+
+def create_zim_file(dump_file_path, zim_file_path):
+	with mwxml.Dump.from_file(open(dump_file_path, 'rb')) as dump:
+		with create_new_zim(zim_file_path) as zim_writer:
+			for page in dump:
+				if not page.redirect and not page.title.startswith('File:'):
+					zim_writer.add_article(page.title, page.text)
+```
+</MdxCodeBlock>

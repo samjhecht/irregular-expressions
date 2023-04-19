@@ -10,6 +10,7 @@ import { allBlogPosts, BlogPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import MdxImage from 'components/MdxImage/MdxImage';
 import MdxCodeBlock from 'components/MdxCodeBlock';
+import BlogImage from 'components/BlogImage';
 
 type BlogPostProps = {
     post: BlogPost,
@@ -50,7 +51,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 }
 
-const components = { Link, Image, Box, Typography, MdxImage, MdxCodeBlock }
+const components = { Link, Image, Box, BlogImage, Typography, MdxImage, MdxCodeBlock }
 
 export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
     
