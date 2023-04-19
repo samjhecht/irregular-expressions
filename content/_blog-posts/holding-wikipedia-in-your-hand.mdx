@@ -63,6 +63,7 @@ If so, you're probably going to prefer to automate all this programmatically.  B
 
 If you're comfortable running a python script, here's one you can use to automate this process:
 
+<MdxCodeBlock language="python">
 ```python
 import os
 import re
@@ -97,7 +98,6 @@ def download_latest_wikipedia_zim(language_code, dump_dir):
 		print('No new zim file found')
 		return None
 
-
 if __name__ == '__main__':
 	language_code = 'en'
 	dump_dir = '/Volumes/SamsungUSB' # change this to the mount point of your USB drive or whatever other directory you might want to save things in.
@@ -113,12 +113,14 @@ if __name__ == '__main__':
 				os.remove(os.path.join(dump_dir, file_name))
 				print(f'Deleted previous ZIM file {file_name}')
 	else:
-		print('ZIM file download failed, previous versions were not deleted')
+		print('ZIM file download failed, previous versions were not deleted')			
 ```
+</MdxCodeBlock>
 
 You could also download the `.xml` version straight from the Wikimedia downloads page, but you'll need to add logic to convert the file to a `.zim` version that Kiwix can read.   This is doable with a couple extra libraries but will require quite a bit more memory during the conversion process:
 
-```python
+<MdxCodeBlock language="python">
+``` python
 import mwxml
 from zimply import create_new_zim
 
@@ -137,3 +139,4 @@ def create_zim_file(dump_file_path, zim_file_path):
 				if not page.redirect and not page.title.startswith('File:'):
 					zim_writer.add_article(page.title, page.text)
 ```
+</MdxCodeBlock>
