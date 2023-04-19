@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Box } from '@mui/material';
 
 type MdxImageProps = {
+  width: number;
   src: string;
   alt: string;
   figcaption?: string;
@@ -31,6 +32,7 @@ const Image = styled.img`
 `;
 
 function MdxImage({
+  width,
   src,
   alt,
   figcaption,
@@ -50,7 +52,7 @@ function MdxImage({
             justifyContent={alignment}
             alignItems={alignment}
             >
-            <Image src={src} alt={alt} />
+            <Image src={src} alt={alt} width={width}/>
             <StyledImageFigcaption>{figcaption}</StyledImageFigcaption>
         </Box>
         </ImageWrapper>
@@ -68,7 +70,7 @@ function MdxImage({
             justifyContent={alignment}
             alignItems={alignment}
         >
-            <Image src={src} alt={alt} />
+            <Image src={src} alt={alt} width={width}/>
         </Box>
     </ImageWrapper>
   );
