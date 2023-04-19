@@ -7,7 +7,8 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import './global-styles.css';
-import 'prismjs/themes/prism-tomorrow.css';
+import 'highlight.js/styles/atom-one-dark-reasonable.css'
+
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
