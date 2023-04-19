@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Link from '../../components/link'
 import Layout from '../../components/layout'
-import { Container, Box, Stack, Typography, Divider } from '@mui/material';
+import { Container, Grid, Box, Stack, Typography, Divider } from '@mui/material';
 import Head from 'next/head'
 import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
@@ -11,6 +11,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import MdxImage from 'components/MdxImage/MdxImage';
 import MdxCodeBlock from 'components/MdxCodeBlock';
 import BlogImage from 'components/BlogImage';
+import SubscribeBox from 'components/SubscribeBox';
 
 type BlogPostProps = {
     post: BlogPost,
@@ -53,7 +54,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
 const components = { Link, Image, Box, BlogImage, Typography, MdxImage, MdxCodeBlock }
 
-export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostProps) {
+export default function EssayTemplate({ post, previousPost, nextPost }: BlogPostProps) {
     
     const MdxContent = useMDXComponent(post?.body.code)
 
@@ -62,7 +63,7 @@ export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostP
         return <ErrorPage statusCode={404} />
     }
 
-    const postTitle = `${post?.title}` || 'Regular Expressions Blog Post'
+    const postTitle = `${post?.title}` || 'Regular Expressions Essay'
     return (
         <Layout>
             <Container maxWidth="md">
@@ -96,29 +97,46 @@ export default function BlogTemplate({ post, previousPost, nextPost }: BlogPostP
                     <Divider light />
                     <br />
                 </Box>
-                <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                    sx={{
-                        padding: 0,
-                    }}>
-                    <Box>
-                        {previousPost && (
-                            <Link href={`/blog/${previousPost.slug}`} rel="prev">
-                                ← {previousPost.title}
-                            </Link>
-                        )}
-                    </Box>
-                    <Box>
-                        {nextPost && (
-                            <Link href={`/blog/${nextPost.slug}`} rel="next">
-                                {nextPost.title} →
-                            </Link>
-                        )}
-                    </Box>
-                </Stack>
+                <Grid container spacing={3}>
+
+                    <Grid item xs={12} sm={6}>
+                        <Box
+                            sx={{
+                                marginTop: 1,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Stack
+                                direction="column"
+                                alignItems="left"
+                                alignContent="start"
+                                spacing={1}
+                                mt={2}
+                            >
+                                <Typography variant="h6" sx={{ fontWeight: "bold" }}>More Essays</Typography>
+                                <Box>
+                                    {previousPost && (
+                                        <Link href={`/essays/${previousPost.slug}`} rel="prev">
+                                            Previous: {previousPost.title}
+                                        </Link>
+                                    )}
+                                </Box>
+                                <Box>
+                                    {nextPost && (
+                                        <Link href={`/essays/${nextPost.slug}`} rel="next">
+                                            Next: {nextPost.title}
+                                        </Link>
+                                    )}
+                                </Box>
+                            </Stack>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <SubscribeBox />
+                    </Grid>
+                </Grid>
             </Container>
         </Layout>
     )

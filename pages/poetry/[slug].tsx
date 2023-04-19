@@ -2,12 +2,13 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Link from '../../components/link'
 import Layout from '../../components/layout'
-import { Container, Box, Stack, Typography, Divider } from '@mui/material';
+import { Container, Box, Stack, Typography, Divider, Grid } from '@mui/material';
 import Head from 'next/head'
 import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
+import SubscribeBox from '../../components/SubscribeBox'
 
 
 type PoetryPostProps = {
@@ -47,7 +48,6 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         },
     };
 }
-
 
 const components = { Link, Image, Box, Typography }
 
@@ -95,29 +95,47 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
                     <Divider light />
                     <br />
                 </Box>
-                <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                    sx={{
-                        padding: 0,
-                    }}>
-                    <Box>
-                        {previousPost && (
-                            <Link href={`/poetry/${previousPost.slug}`} rel="prev">
-                                ← {previousPost.title}
-                            </Link>
-                        )}
-                    </Box>
-                    <Box>
-                        {nextPost && (
-                            <Link href={`/poetry/${nextPost.slug}`} rel="next">
-                                {nextPost.title} →
-                            </Link>
-                        )}
-                    </Box>
-                </Stack>
+                <Grid container spacing={3}>
+
+                    <Grid item xs={12} sm={6}>
+                        <Box
+                            sx={{
+                                marginTop: 1,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Stack
+                                direction="column"
+                                alignItems="left"
+                                alignContent="start"
+                                spacing={1}
+                                mt={2}
+                            >
+                                <Typography variant="h6" sx={{ fontWeight: "bold" }}>More Poems</Typography>
+                                <Box>
+                                    {previousPost && (
+                                        <Link href={`/poetry/${previousPost.slug}`} rel="prev">
+                                            Previous: {previousPost.title}
+                                        </Link>
+                                    )}
+                                </Box>
+                                <Box>
+                                    {nextPost && (
+                                        <Link href={`/poetry/${nextPost.slug}`} rel="next">
+                                            Next: {nextPost.title}
+                                        </Link>
+                                    )}
+                                </Box>
+                            </Stack>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <SubscribeBox />
+                    </Grid>
+                </Grid>
+
             </Container>
         </Layout>
     )

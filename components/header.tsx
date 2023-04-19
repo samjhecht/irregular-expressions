@@ -63,20 +63,20 @@ const Header: React.FC = () => {
                         </Link>
                     </Typography>
                     <Typography
-                        fontWeight={page === "blog" ? "bold" : "normal"}
-                        fontStyle={page === "blog" ? "italic" : "normal"}
+                        fontWeight={page === "essays" ? "bold" : "normal"}
+                        fontStyle={page === "essays" ? "italic" : "normal"}
                         sx={{
                             fontSize: "1.5rem",
                         }}
                     >
                         <Link
-                            href="/blog"
+                            href="/essays"
                             style={{
                                 color: "black",
                                 textDecoration: "none",
                             }}
                         >
-                            Blog
+                            Essays
                         </Link>
                     </Typography>
                     <Typography

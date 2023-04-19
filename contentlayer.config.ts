@@ -30,7 +30,7 @@ export const BlogPost = defineDocumentType(() => ({
         },
         url: {
             type: 'string',
-            resolve: (post) => `/blog/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
+            resolve: (post) => `/essays/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
         },
     },
 }))
@@ -56,7 +56,7 @@ export const PoetryPost = defineDocumentType(() => ({
         },
         url: {
             type: 'string',
-            resolve: (post) => `/blog/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
+            resolve: (post) => `/poetry/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
         },
     },
 }))
@@ -83,7 +83,7 @@ export const HiddenPage = defineDocumentType(() => ({
         },
         url: {
             type: 'string',
-            resolve: (post) => `/blog/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
+            resolve: (post) => `/hidden-pages/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
         },
     },
 }))

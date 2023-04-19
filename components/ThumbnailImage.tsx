@@ -31,7 +31,7 @@ const ThumbnailImage = ({ title, src, slug }: Props) => {
   return (
     <Box>
       {slug ? (
-        <Link as={`/blog/${slug}`} href="/blog/[slug]" aria-label={title}>
+        <Link as={`/essays/${slug}`} href="/essays/[slug]" aria-label={title}>
           {image}
         </Link>
       ) : (

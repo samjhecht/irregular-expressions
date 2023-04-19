@@ -103,14 +103,14 @@ export default function HiddenPageTemplate({ post, previousPost, nextPost }: Hid
                     }}>
                     <Box>
                         {previousPost && (
-                            <Link href={`/blog/${previousPost.slug}`} rel="prev">
+                            <Link href={`/essays/${previousPost.slug}`} rel="prev">
                                 ← {previousPost.title}
                             </Link>
                         )}
                     </Box>
                     <Box>
                         {nextPost && (
-                            <Link href={`/blog/${nextPost.slug}`} rel="next">
+                            <Link href={`/essays/${nextPost.slug}`} rel="next">
                                 {nextPost.title} →
                             </Link>
                         )}

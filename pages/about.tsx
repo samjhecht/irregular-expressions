@@ -2,6 +2,7 @@ import Link from '../components/link';
 import { Typography, Box, Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Layout from '../components/layout';
+import SubscribeBox from 'components/SubscribeBox';
 
 export default function About() {
 

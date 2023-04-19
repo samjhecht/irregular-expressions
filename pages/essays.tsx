@@ -13,12 +13,12 @@ export async function getStaticProps() {
     return { props: { posts } }
 }
 
-export default function BlogHome({ posts }: { posts: BlogPost[] }) {
+export default function EssaysHome({ posts }: { posts: BlogPost[] }) {
 
     if (posts.length === 0) {
         return (
             <Layout>
-                <Typography variant="body1">There are no blog posts yet.</Typography>
+                <Typography variant="body1">There are no essays yet.</Typography>
             </Layout>
         )
     }
@@ -27,7 +27,7 @@ export default function BlogHome({ posts }: { posts: BlogPost[] }) {
         <>
             <Layout>
                 <Head>
-                    <title>{`Irregular Expressions Blog`}</title>
+                    <title>{`Irregular Expressions Essays`}</title>
                 </Head>
                 <List>
                     {posts.map((post) => {
@@ -36,7 +36,7 @@ export default function BlogHome({ posts }: { posts: BlogPost[] }) {
 
                         return (
                             <ListItem
-                                key={`/blog${post.slug}`}
+                                key={`/essays${post.slug}`}
                                 sx={{
                                     display: 'flex',
                                     alignItems: 'stretch'
@@ -56,7 +56,7 @@ export default function BlogHome({ posts }: { posts: BlogPost[] }) {
                                 >
                                     <Stack>
                                         <Link
-                                            href={'/blog/' + post.slug}
+                                            href={'/essays/' + post.slug}
                                             sx={{textDecoration: 'none'}}>
                                             <Typography
                                                 variant="h5"
@@ -69,7 +69,7 @@ export default function BlogHome({ posts }: { posts: BlogPost[] }) {
                                             {format(parseISO(post.date), "LLLL d, yyyy")}
                                         </Typography>
                                         <Link
-                                            href={'/blog/' + post.slug}
+                                            href={'/essays/' + post.slug}
                                             sx={{
                                                 variant: 'body2',
                                                 fontWeight: 'normal',
