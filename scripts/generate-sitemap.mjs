@@ -16,7 +16,7 @@ async function generate() {
           file
             .replace('pages', '')
             .replace('content', '')
-            .replace('_blog-posts', 'blog')
+            .replace('_essays', 'essays')
             .replace('_poetry', 'poetry')
             .replace('.tsx', '')
             .replace('.mdx', '')

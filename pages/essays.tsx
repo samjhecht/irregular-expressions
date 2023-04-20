@@ -4,16 +4,16 @@ import Head from 'next/head'
 import Link from '../components/link';
 import ThumbnailImage from '../components/ThumbnailImage';
 import { compareDesc, format, parseISO } from "date-fns";
-import { allBlogPosts, BlogPost } from "contentlayer/generated";
+import { allEssayPosts, EssayPost } from "contentlayer/generated";
 
 export async function getStaticProps() {
-    const posts: BlogPost[] = allBlogPosts.sort((a, b) => {
+    const posts: EssayPost[] = allEssayPosts.sort((a, b) => {
         return compareDesc(new Date(a.date), new Date(b.date))
     })
     return { props: { posts } }
 }
 
-export default function EssaysHome({ posts }: { posts: BlogPost[] }) {
+export default function EssaysHome({ posts }: { posts: EssayPost[] }) {
 
     if (posts.length === 0) {
         return (

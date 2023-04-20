@@ -9,9 +9,9 @@ import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeHighlight from 'rehype-highlight'
 
-export const BlogPost = defineDocumentType(() => ({
-    name: 'BlogPost',
-    filePathPattern: '_blog-posts/*.mdx',
+export const EssayPost = defineDocumentType(() => ({
+    name: 'EssayPost',
+    filePathPattern: '_essays/*.mdx',
     contentType: 'mdx',
     fields: {
         title: { type: 'string', required: true },
@@ -108,7 +108,7 @@ const prettyCodeOptions = {
 
 export default makeSource({
     contentDirPath: 'content',
-    documentTypes: [BlogPost, PoetryPost, HiddenPage],
+    documentTypes: [PoetryPost, HiddenPage, EssayPost],
     mdx: {
         remarkPlugins: [remarkGfm],
         rehypePlugins: [

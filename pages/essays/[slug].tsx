@@ -6,41 +6,41 @@ import { Container, Grid, Box, Stack, Typography, Divider } from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
-import { allBlogPosts, BlogPost } from "contentlayer/generated";
+import { allEssayPosts, EssayPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import MdxImage from 'components/MdxImage/MdxImage';
 import MdxCodeBlock from 'components/MdxCodeBlock';
 import BlogImage from 'components/BlogImage';
 import SubscribeBox from 'components/SubscribeBox';
 
-type BlogPostProps = {
-    post: BlogPost,
-    previousPost: BlogPost,
-    nextPost: BlogPost
+type EssayPostProps = {
+    post: EssayPost,
+    previousPost: EssayPost,
+    nextPost: EssayPost
 }
 
 export async function getStaticPaths() {
     return {
-        paths: allBlogPosts.map((post) => ({ params: { slug: post.slug } })),
+        paths: allEssayPosts.map((post) => ({ params: { slug: post.slug } })),
         fallback: false,
     }
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
     
-    const post = allBlogPosts.find(
+    const post = allEssayPosts.find(
         (post) => post.slug === params.slug
     );
 
-    const postIndex = allBlogPosts.sort((a, b) => {
+    const postIndex = allEssayPosts.sort((a, b) => {
         return compareDesc(new Date(a.date), new Date(b.date))
       }).findIndex(post => post.slug === params.slug)
     
-    const previousPost = allBlogPosts[postIndex + 1] || null
+    const previousPost = allEssayPosts[postIndex + 1] || null
     let nextPost = null;
     if (postIndex !== 0) {
         // Only assign nextPost if postIndex is not zero
-        nextPost = allBlogPosts[postIndex - 1] || null;
+        nextPost = allEssayPosts[postIndex - 1] || null;
       }
 
     return {
@@ -54,7 +54,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
 const components = { Link, Image, Box, BlogImage, Typography, MdxImage, MdxCodeBlock }
 
-export default function EssayTemplate({ post, previousPost, nextPost }: BlogPostProps) {
+export default function EssayTemplate({ post, previousPost, nextPost }: EssayPostProps) {
     
     const MdxContent = useMDXComponent(post?.body.code)
 
