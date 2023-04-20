@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/rss.mjs",
     "postbuild": "node ./scripts/generate-sitemap.mjs",
     "start": "next start",
     "lint": "next lint",
@@ -56,6 +56,7 @@
     "globby": "^11.0.1",
     "prettier": "^2.8.7",
     "rss": "^1.2.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "latest"
   }
 }

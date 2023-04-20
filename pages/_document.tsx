@@ -44,6 +44,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
           </>
         )}
         {/* PWA primary color */}
+        <link rel="alternate" type="application/rss+xml" title="irregular-expressions.com rss feed" href="/rss.xml" />
         <meta name="theme-color" content={theme.palette.primary.main} />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />
