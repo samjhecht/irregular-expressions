@@ -140,3 +140,5 @@ dist
 
 # Contentlayer
 .contentlayer
+
+public/rss.xml

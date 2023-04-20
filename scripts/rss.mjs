@@ -1,7 +1,7 @@
 
 // import RSS from 'rss';
 // require('tsconfig-paths/register');
-import { allBlogPosts, allPoetryPosts } from 'contentlayer/generated';
+import { allBlogPosts, allPoetryPosts } from './.contentlayer/generated';
 import { compareDesc, parseISO } from "date-fns";
 import { Feed } from "feed";
 import { writeFileSync } from "fs";
