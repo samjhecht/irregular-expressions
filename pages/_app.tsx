@@ -22,22 +22,6 @@ export interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  
-  // const router = useRouter();
-  // useEffect(() => {
-  //   const handleRouteChange = (url: URL) => {
-  //     if (isProd) {
-  //       // window.gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
-  //       //   page_path: url,
-  //       // });
-  //       window && window.gtag && window.gtag('config', process.env.NEXT_PUBLIC_GA_ID as string, { page_path: url, }); 
-  //     }
-  //   }
-  //   router.events.on('routeChangeComplete', handleRouteChange);
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange);
-  //   }
-  // }, [router.events]);
 
   return (
     <CacheProvider value={emotionCache}>
