@@ -12,14 +12,16 @@ import { AppType } from 'next/app';
 import theme, { myFonts } from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import { MyAppProps } from './_app';
+import { ServerStyleSheet } from 'styled-components'
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
+  styledComponentStyles: JSX.Element;
 }
 
 // const isProd = process.env.NODE_ENV === "production";
 
-export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
+export default function MyDocument({ emotionStyleTags, styledComponentStyles }: MyDocumentProps) {
   return (
     <Html lang="en" className={myFonts.className}>
       <Head>
@@ -29,6 +31,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
+        {styledComponentStyles}
       </Head>
       <body>
         <Main />
@@ -63,6 +66,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // 3. app.render
   // 4. page.render
 
+  const sheet = new ServerStyleSheet();
   const originalRenderPage = ctx.renderPage;
 
   // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
@@ -74,11 +78,13 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
     originalRenderPage({
       enhanceApp: (App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>) =>
         function EnhanceApp(props) {
-          return <App emotionCache={cache} {...props} />;
+          // return <App emotionCache={cache} {...props} />;
+          return sheet.collectStyles(<App emotionCache={createEmotionCache()} {...props} />);
         },
     });
 
   const initialProps = await Document.getInitialProps(ctx);
+
   // This is important. It prevents Emotion to render invalid HTML.
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html);
@@ -94,5 +100,6 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   return {
     ...initialProps,
     emotionStyleTags,
+    styledComponentStyles: sheet.getStyleElement(),
   };
 };

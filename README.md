@@ -5,6 +5,5 @@
 - sitemap
 - go back to using next/image to improve loading optimization
 - google analytics
-- mailchimp
 - database for login
-- comment form on blog
+- look into whether i should be doing this: https://github.com/vercel/next.js/blob/deprecated-main/examples/with-emotion/shared/styles.js.   or this https://github.com/vercel/next.js/blob/canary/examples/with-styled-components/components/globalstyles.tsx
