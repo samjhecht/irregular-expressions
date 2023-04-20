@@ -2,6 +2,7 @@ import Link from '../components/link';
 import { Typography, Box, Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Layout from '../components/layout';
+import SubscribeBox from '../components/SubscribeBox';
 
 export default function About() {
 
@@ -21,7 +22,7 @@ export default function About() {
           <Stack direction="column" spacing={4}>
             <Typography variant="body1">
               Welcome to Irregular-Expressions.com!&nbsp;&nbsp; I&apos;m <strong>Julius Hecht</strong>.&nbsp;&nbsp;
-              I made this site so I could publish my poetry and other stuff I feel like writing.&nbsp;&nbsp;
+              My website is a necessary extravagance.&nbsp;&nbsp;I made it so I can publish my poetry and other stuff I feel like creating.&nbsp;&nbsp;
               Now, please excuse me while I express myself.
               {` `}
             </Typography>
@@ -38,7 +39,7 @@ export default function About() {
                     width: "40px",
                     height: "40px",
                   }}
-                  src="/images/github_icon_128.png"
+                  src="/static/images/github_icon_128.png"
                   alt="Github logo"
                   loading="eager"
                 />
@@ -50,7 +51,7 @@ export default function About() {
                     width: 40,
                     height: 40,
                   }}
-                  src="/images/instagram_logo_128.png"
+                  src="/static/images/instagram_logo_128.png"
                   alt="Instagram logo"
                   loading="eager"
                 />
@@ -62,7 +63,7 @@ export default function About() {
                     width: 40,
                     height: 40,
                   }}
-                  src="/images/linkedin_logo_128.png"
+                  src="/static/images/linkedin_logo_128.png"
                   alt="LinkedIn logo"
                   loading="eager"
                 />
@@ -70,10 +71,10 @@ export default function About() {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={12} sm={5} md={5} sx={{ display: "flex", alignContent: "center", justifyContent: "center", alignItems:"center"}}>
+        <Grid item xs={12} sm={5} md={5} sx={{ display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
           <Box
             component="img"
-            src="/images/with_david_800_915.jpg"
+            src="/static/images/with_david_800_915.jpg"
             sx={{
               minWidth: "200px",
               maxWidth: "100%",

@@ -98,7 +98,6 @@ export default function EssayTemplate({ post, previousPost, nextPost }: EssayPos
                     <br />
                 </Box>
                 <Grid container spacing={3}>
-
                     <Grid item xs={12} sm={6}>
                         <Box
                             sx={{

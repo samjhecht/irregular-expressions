@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://irregular-expressions.vercel.app/sitemap.xml
+Sitemap: https://irregular-expressions.com/sitemap.xml
