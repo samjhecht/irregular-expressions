@@ -8,12 +8,18 @@ type PostView = {
     views: string;
 };
 
-async function fetcher<JSON = any>(
+async function fetcher<T = unknown>(
     input: RequestInfo,
-    init?: RequestInit
-): Promise<JSON> {
-    const res = await fetch(input, init);
-    return res.json();
+    init?: RequestInit,
+  ): Promise<T> {
+    const res = await fetch(input, init)
+    const data = await res.json()
+  
+    if (!res.ok) {
+      throw new Error(data.message || 'Something went wrong')
+    }
+  
+    return data
 }
 
 export default function ViewCounter({
