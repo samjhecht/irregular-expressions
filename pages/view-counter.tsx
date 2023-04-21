@@ -27,7 +27,7 @@ export default function ViewCounter({
     const viewsForSlug = data && data.find((view) => view.slug === slug);
     const views = new Number(viewsForSlug?.views || 0);
 
-    console.log('Data:', data); // Log the data received from the API
+    // console.log('Data:', data);
 
     useEffect(() => {
         const registerView = () =>
@@ -38,7 +38,7 @@ export default function ViewCounter({
         if (trackView) {
             registerView();
         }
-    }, [slug]);
+    }, [slug, trackView]);
 
     return (
         <Box display="flex" alignItems="center" sx={{

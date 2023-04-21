@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = await connectToDatabase();
     const { rows } = await db.query('SELECT slug, views FROM page_views');
 
-    console.log('Data index:', rows); // Log the rows in the API route
+    // console.log('Data index:', rows); 
 
     return res.status(200).json(rows);
   } catch (e) {
