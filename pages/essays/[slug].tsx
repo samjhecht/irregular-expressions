@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import ErrorPage from 'next/error'
 import Link from '../../components/link'
 import Layout from '../../components/layout'

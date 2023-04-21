@@ -5,8 +5,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { email } = req.body;
 
-  console.log({ email });
-
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
   }
