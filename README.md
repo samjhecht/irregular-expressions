@@ -7,3 +7,4 @@
 - roll my own aggregation feed that has a card for every poem, essay, or instagram post (and source them from insta)
 - clean up duplicate and unused images in static/images
 - Add integration with instagram client
+- blog page views

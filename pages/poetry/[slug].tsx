@@ -9,7 +9,7 @@ import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import SubscribeBox from '../../components/SubscribeBox'
-
+import ViewCounter from '../view-counter';
 
 type PoetryPostProps = {
     post: PoetryPost,
@@ -80,12 +80,26 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
                             }}>
                                 {postTitle}
                             </Typography>
-                            <Typography variant="subtitle1" sx={{
+                            <Stack
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography variant="subtitle1" sx={{
+                                    paddingBottom: "1rem",
+                                    paddingTop: "0.5rem"
+                                }}>
+                                    {format(parseISO(post.date), "LLLL d, yyyy")}
+                                </Typography>
+                                <ViewCounter slug={post.slug} trackView={true} />
+                            </Stack>
+                            {/* <Typography variant="subtitle1" sx={{
                                 paddingBottom: "1rem",
                                 paddingTop: "0.5rem"
                             }}>
                                 {format(parseISO(post.date), "LLLL d, yyyy")}
-                            </Typography>
+                            </Typography> */}
                         </Box>
                         <MdxContent components={components} />
                     </>

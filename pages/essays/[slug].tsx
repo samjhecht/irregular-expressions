@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import ErrorPage from 'next/error'
 import Link from '../../components/link'
 import Layout from '../../components/layout'
@@ -12,6 +13,7 @@ import MdxImage from 'components/MdxImage/MdxImage';
 import MdxCodeBlock from 'components/MdxCodeBlock';
 import BlogImage from 'components/BlogImage';
 import SubscribeBox from 'components/SubscribeBox';
+import ViewCounter from '../view-counter'
 
 type EssayPostProps = {
     post: EssayPost,
@@ -27,21 +29,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-    
+
     const post = allEssayPosts.find(
         (post) => post.slug === params.slug
     );
 
     const postIndex = allEssayPosts.sort((a, b) => {
         return compareDesc(new Date(a.date), new Date(b.date))
-      }).findIndex(post => post.slug === params.slug)
-    
+    }).findIndex(post => post.slug === params.slug)
+
     const previousPost = allEssayPosts[postIndex + 1] || null
     let nextPost = null;
     if (postIndex !== 0) {
         // Only assign nextPost if postIndex is not zero
         nextPost = allEssayPosts[postIndex - 1] || null;
-      }
+    }
 
     return {
         props: {
@@ -55,7 +57,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 const components = { Link, Image, Box, BlogImage, Typography, MdxImage, MdxCodeBlock }
 
 export default function EssayTemplate({ post, previousPost, nextPost }: EssayPostProps) {
-    
+
     const MdxContent = useMDXComponent(post?.body.code)
 
     const router = useRouter()
@@ -82,12 +84,20 @@ export default function EssayTemplate({ post, previousPost, nextPost }: EssayPos
                             }}>
                                 {postTitle}
                             </Typography>
-                            <Typography variant="subtitle1" sx={{
-                                paddingBottom: "1rem",
-                                paddingTop: "0.5rem"
-                            }}>
-                                {format(parseISO(post.date), "LLLL d, yyyy")}
-                            </Typography>
+                            <Stack
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography variant="subtitle1" sx={{
+                                    paddingBottom: "1rem",
+                                    paddingTop: "0.5rem"
+                                }}>
+                                    {format(parseISO(post.date), "LLLL d, yyyy")}
+                                </Typography>
+                                <ViewCounter slug={post.slug} trackView={true} />
+                            </Stack>
                         </Box>
                         <MdxContent components={components} />
                     </>

@@ -5,6 +5,7 @@ import Link from '../components/link';
 import ThumbnailImage from '../components/ThumbnailImage';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allEssayPosts, EssayPost } from "contentlayer/generated";
+import ViewCounter from './view-counter';
 
 export async function getStaticProps() {
     const posts: EssayPost[] = allEssayPosts.sort((a, b) => {
@@ -80,6 +81,7 @@ export default function EssaysHome({ posts }: { posts: EssayPost[] }) {
                                                 {blogDescription}
                                             </Typography>
                                         </Link>
+                                        <ViewCounter slug={post.slug} trackView={false} />
                                     </Stack>
                                 </Box>
                                 <Box

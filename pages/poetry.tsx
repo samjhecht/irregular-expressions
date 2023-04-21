@@ -6,6 +6,7 @@ import Link from '../components/link';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts } from "contentlayer/generated";
 import PoetryThumbnailImage from '../components/PoetryThumbnail';
+import ViewCounter from './view-counter';
 
 const PAGE_SIZE = 10;
 

@@ -28,6 +28,7 @@
     "next": "latest",
     "next-contentlayer": "^0.3.0",
     "next-mdx-remote": "^4.4.1",
+    "pg": "^8.10.0",
     "prismjs": "^1.29.0",
     "react": "latest",
     "react-dom": "latest",
@@ -42,11 +43,13 @@
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
     "shiki": "^0.11.1",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "swr": "^2.1.3"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.12",
     "@types/node": "latest",
+    "@types/pg": "^8.6.6",
     "@types/prettier": "^2.7.2",
     "@types/react": "latest",
     "@types/react-highlight": "^0.12.5",
