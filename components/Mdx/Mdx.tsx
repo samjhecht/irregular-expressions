@@ -31,8 +31,7 @@ const CustomLink = (props) => {
     return <ChakraLink target="_blank" rel="noopener noreferrer" {...props} />;
 };
 
-
-const MDXComponents: Record<string, React.FC<React.ComponentPropsWithRef<keyof JSX.IntrinsicElements>>> = {
+const MDXComponents: Record<string, React.FC<React.ComponentPropsWithRef<any>>> = {
     Box,
     Text,
     MdxImage,
