@@ -1,25 +1,19 @@
-import { Typography, Box } from '@mui/material';
-import Layout from "../components/layout";
+import { Text, Box } from '@chakra-ui/react';
+import Layout from '../components/layout';
 
 export default function Home() {
   return (
     <Layout>
-      <Box sx={{
-        my: 4,
-        alignContent: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}>
-        <Typography
-          gutterBottom
-          sx={{
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-          }}
-        >
+      <Box
+        my={4}
+        alignContent="center"
+        justifyContent="center"
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+      >
+        <Text fontFamily="body" textAlign="center" whiteSpace="nowrap">
           At my window
           <br />
           Watching the sun go
@@ -29,17 +23,10 @@ export default function Home() {
           It&apos;s time to shine...
           <br />
           <br />
-        </Typography>
-        <Typography
-          gutterBottom
-          sx={{
-            textAlign: 'center',
-            fontStyle: 'italic',
-            whiteSpace: 'nowrap',
-          }}
-        >
+        </Text>
+        <Text textAlign="center" fontStyle="italic" whiteSpace="nowrap">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Townes Van Zandt
-        </Typography>
+        </Text>
       </Box>
     </Layout>
   );

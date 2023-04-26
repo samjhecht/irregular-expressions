@@ -1,105 +1,68 @@
 import { useRouter } from "next/router";
-import Link from "./link"
-import { Typography, Stack } from "@mui/material";
+import { Text, Flex, HStack, Link } from "@chakra-ui/react";
 
 const Header: React.FC = () => {
-    const router = useRouter();
-    const pathname = router.pathname;
-    const pathnameArray = pathname.split("/");
-    const page = pathnameArray[1];
+  const router = useRouter();
+  const pathname = router.pathname;
+  const pathnameArray = pathname.split("/");
+  const page = pathnameArray[1];
 
-    return (
-        <>
-            <Stack
-                direction="column"
-                spacing={2}
-                sx={{
-                    mb: 8,
-                    display: "flex",
-                    alignContent: "center",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
+  return (
+    <>
+      <Flex
+        direction="column"
+        mb={14}
+        alignItems="center"
+        justifyContent="flex-start"
+        alignContent="center"
+        minW="100%"
+      >
+        <Link href="/" color="black" textDecoration="none" _hover={{ textDecoration: "none" }}>
+          <Text
+            fontSize="4xl"
+            fontFamily={"Vulf Sans Bold"}
+            mb="1rem"
+            whiteSpace="nowrap"
+            ml="1rem"
+          >
+            Irregular Expressions
+          </Text>
+        </Link>
+
+        <HStack spacing={6} justifyContent="center" alignItems="center">
+          <Text
+            fontSize="2xl"
+            fontFamily={page === "poetry" ? "Vulf Sans Bold Italic" : "body"}
+          >
+            <Link
+              href="/poetry"
+              color="black"
+              textDecoration="none"
+              _hover={{ textDecoration: "none" }}
             >
-                <Typography
-                    variant="h4"
-                    sx={{
-                        fontWeight: "bold",
-                        fontStyle: "normal",
-                        whiteSpace: "nowrap",
-                    }}
-                >
-                    <Link
-                        href="/"
-                        style={{
-                            color: "black",
-                            textDecoration: "none",
-                        }}
-                    >
-                        Irregular Expressions
-                    </Link>
-                </Typography>
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography
-                        fontWeight={page === "poetry" ? "bold" : "normal"}
-                        fontStyle={page === "poetry" ? "italic" : "normal"}
-                        sx={{
-                            fontSize: "1.5rem",
-                        }}
-                    >
-                        <Link
-                            href="/poetry"
-                            style={{
-                                color: "black",
-                                textDecoration: "none",
-                            }}
-                        >
-                            Poetry
-                        </Link>
-                    </Typography>
-                    <Typography
-                        fontWeight={page === "essays" ? "bold" : "normal"}
-                        fontStyle={page === "essays" ? "italic" : "normal"}
-                        sx={{
-                            fontSize: "1.5rem",
-                        }}
-                    >
-                        <Link
-                            href="/essays"
-                            style={{
-                                color: "black",
-                                textDecoration: "none",
-                            }}
-                        >
-                            Essays
-                        </Link>
-                    </Typography>
-                    <Typography
-                        fontWeight={page === "about" ? "bold" : "normal"}
-                        fontStyle={page === "about" ? "italic" : "normal"}
-                        sx={{
-                            fontSize: "1.5rem",
-                        }}
-                    >
-                        <Link
-                            href="/about"
-                            style={{
-                                color: "black",
-                                textDecoration: "none",
-                            }}
-                        >
-                            About
-                        </Link>
-                    </Typography>
-                </Stack>
-            </Stack>
-        </>
-    );
+              Poetry
+            </Link>
+          </Text>
+          <Text
+            fontSize="2xl"
+            fontFamily={page === "essays" ? "Vulf Sans Bold Italic" : "body"}
+          >
+            <Link href="/essays" color="black" textDecoration="none" _hover={{ textDecoration: "none" }}>
+              Essays
+            </Link>
+          </Text>
+          <Text
+            fontSize="2xl"
+            fontFamily={page === "about" ? "Vulf Sans Bold Italic" : "body"}
+          >
+            <Link href="/about" color="black" textDecoration="none" _hover={{ textDecoration: "none" }}>
+              About
+            </Link>
+          </Text>
+        </HStack>
+      </Flex>
+    </>
+  );
 };
 
 export default Header;

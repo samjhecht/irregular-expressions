@@ -1,3 +1,40 @@
+// import * as React from 'react';
+// import theme from '../src/theme';
+// import { ColorModeScript } from '@chakra-ui/react'
+// import NextDocument, {
+//   Html,
+//   Head,
+//   Main,
+//   NextScript,
+// } from 'next/document';
+
+
+// export default class Document extends NextDocument {
+//   render() {
+//     return (
+//       <Html>
+//         <Head>
+//           <link
+//             rel="alternate"
+//             type="application/rss+xml"
+//             title="irregular-expressions.com rss feed"
+//             href="/rss.xml"
+//           />
+//           <meta name="theme-color" content={theme.colors.primary} />
+//           <link rel="shortcut icon" href="/favicon.ico" />
+//         </Head>
+//         <body>
+//           {/* Make Color mode to persists when you refresh the page. */}
+//           <ColorModeScript />
+//           <Main />
+//           <NextScript />
+//         </body>
+//       </Html>
+//     )
+//   }
+// }
+
+
 import * as React from 'react';
 import Document, {
   Html,
@@ -7,9 +44,10 @@ import Document, {
   DocumentProps,
   DocumentContext,
 } from 'next/document';
+import { ColorModeScript } from '@chakra-ui/react'
 import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
-import theme, { myFonts } from '../src/theme';
+import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import { MyAppProps } from './_app';
 import { ServerStyleSheet } from 'styled-components'
@@ -23,17 +61,19 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags, styledComponentStyles }: MyDocumentProps) {
   return (
-    <Html lang="en" className={myFonts.className}>
+    <Html lang="en">
       <Head>
         {/* PWA primary color */}
         <link rel="alternate" type="application/rss+xml" title="irregular-expressions.com rss feed" href="/rss.xml" />
-        <meta name="theme-color" content={theme.palette.primary.main} />
+        <meta name="theme-color" content={theme.colors.primary} />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
         {styledComponentStyles}
       </Head>
       <body>
+        {/* Make Color mode to persists when you refresh the page. */}
+        <ColorModeScript />
         <Main />
         <NextScript />
       </body>

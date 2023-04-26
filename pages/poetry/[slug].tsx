@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Link from '../../components/link'
 import Layout from '../../components/layout'
-import { Container, Box, Stack, Typography, Divider, Grid } from '@mui/material';
 import Head from 'next/head'
 import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
@@ -10,6 +8,7 @@ import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import SubscribeBox from '../../components/SubscribeBox'
 import ViewCounter from '../view-counter';
+import { Box, GridItem, HStack, Container, Link, VStack, Text, Divider, Grid } from '@chakra-ui/react';
 
 type PoetryPostProps = {
     post: PoetryPost,
@@ -49,7 +48,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 }
 
-const components = { Link, Image, Box, Typography }
+const components = { Image, Box, Text }
 
 
 export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPostProps) {
@@ -66,75 +65,52 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
         <Layout>
             <Container>
                 {router.isFallback ? (
-                    <Typography>Loading…</Typography>
+                    <Text>Loading…</Text>
                 ) : (
                     <>
                         <Head>
                             <title>{postTitle}</title>
                         </Head>
                         <Box itemScope itemType="http://schema.org/Article">
-                            <Typography itemProp="headline" sx={{
+                            <Text itemProp="headline" sx={{
                                 fontSize: "2rem",
-                                fontWeight: "bold",
+                                fontFamily: "Vulf Sans Bold",
                                 paddingBottom: "1rem",
                             }}>
                                 {postTitle}
-                            </Typography>
-                            <Stack
-                                direction="row"
+                            </Text>
+                            <HStack
                                 justifyContent="space-between"
                                 alignItems="center"
                                 spacing={2}
                             >
-                                <Typography variant="subtitle1" sx={{
+                                <Text variant="subtitle1" sx={{
                                     paddingBottom: "1rem",
                                     paddingTop: "0.5rem"
                                 }}>
                                     {format(parseISO(post.date), "LLLL d, yyyy")}
-                                </Typography>
+                                </Text>
                                 <ViewCounter slug={post.slug} trackView={true} />
-                            </Stack>
-                            {/* <Typography variant="subtitle1" sx={{
-                                paddingBottom: "1rem",
-                                paddingTop: "0.5rem"
-                            }}>
-                                {format(parseISO(post.date), "LLLL d, yyyy")}
-                            </Typography> */}
+                            </HStack>
                         </Box>
                         <MdxContent components={components} />
                     </>
                 )}
                 <Box mt={4}>
                     <br /><br /><br />
-                    <Divider light />
+                    <Divider />
                     <br />
                 </Box>
-                <Grid container spacing={3}>
-
-                    <Grid item xs={12} sm={6}>
+                <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={4}>
+                    <GridItem>
                         <Box
-                            sx={{
-                                marginTop: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                            }}
+                            mt={1}
+                            display="flex"
+                            flexDirection="column"
+                            alignItems="center"
                         >
-                            <Stack
-                                direction="column"
-                                alignItems="left"
-                                alignContent="start"
-                                spacing={1}
-                                mt={2}
-                            >
-                                <Typography variant="h6" sx={{ fontWeight: "bold" }}>More Poems</Typography>
-                                <Box>
-                                    {previousPost && (
-                                        <Link href={`/poetry/${previousPost.slug}`} rel="prev">
-                                            Previous: {previousPost.title}
-                                        </Link>
-                                    )}
-                                </Box>
+                            <VStack alignItems="left" alignContent="start" spacing={1} mt={2}>
+                                <Text fontSize="xl" fontWeight="bold">More Poems</Text>
                                 <Box>
                                     {nextPost && (
                                         <Link href={`/poetry/${nextPost.slug}`} rel="next">
@@ -142,16 +118,21 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
                                         </Link>
                                     )}
                                 </Box>
-                            </Stack>
+                                <Box>
+                                    {previousPost && (
+                                        <Link href={`/poetry/${previousPost.slug}`} rel="prev">
+                                            Previous: {previousPost.title}
+                                        </Link>
+                                    )}
+                                </Box>
+                            </VStack>
                         </Box>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
+                    </GridItem>
+                    <GridItem>
                         <SubscribeBox />
-                    </Grid>
+                    </GridItem>
                 </Grid>
-
             </Container>
         </Layout>
     )
 }
-

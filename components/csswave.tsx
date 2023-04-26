@@ -1,5 +1,7 @@
-import { Box } from '@mui/material';
-import { styled, keyframes } from '@mui/material/styles';
+
+import { Box } from '@chakra-ui/react';
+import styled from 'styled-components';
+import { keyframes } from '@emotion/react';
 
 export default function CssWave(): JSX.Element {
 

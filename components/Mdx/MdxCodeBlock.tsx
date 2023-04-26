@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { Box, Typography } from '@mui/material';
+import { Box, Text } from '@chakra-ui/react'
 import Highlight from 'react-highlight';
 
 const CodeBlockWrapper = styled(Box)`
   margin-top: 1rem;
 `;
 
-const CodeBlockTitle = styled(Typography)`
+const CodeBlockTitle = styled(Text)`
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
