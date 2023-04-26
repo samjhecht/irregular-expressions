@@ -7,7 +7,7 @@ import Link from 'next/link';
 import MdxImage from './MdxImage/MdxImage';
 import MdxCodeBlock from './MdxCodeBlock';
 
-const ChakraLink = React.forwardRef<HTMLAnchorElement, any>(function ChakraLink(props, ref) {
+const ChakraLink = React.forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<'a'>>(function ChakraLink(props, ref) {
     return (
         <chakra.a
             ref={ref}
@@ -32,7 +32,7 @@ const CustomLink = (props) => {
 };
 
 
-const MDXComponents: Record<string, React.FC<any>> = {
+const MDXComponents: Record<string, React.FC<React.ComponentPropsWithRef<keyof JSX.IntrinsicElements>>> = {
     Box,
     Text,
     MdxImage,
