@@ -1,14 +1,12 @@
 {
   "name": "irregular-expressions",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build && node scripts/rss.mjs",
     "postbuild": "node ./scripts/generate-sitemap.mjs",
-    "start": "next start",
-    "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "start": "next start"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
