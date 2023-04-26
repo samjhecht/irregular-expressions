@@ -1,4 +1,4 @@
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Text, Container } from '@chakra-ui/react';
 
 const StickyFooter: React.FC = () => {
   return (
@@ -11,13 +11,14 @@ const StickyFooter: React.FC = () => {
         }}
       >
         <Container maxWidth="sm">
-          <Typography
+          <Text
             color="text.primary"
+            fontFamily={"body"}
             sx={{ fontSize: "0.92rem", whiteSpace: "nowrap" }}
           >
             {` `}
             Copyright © {new Date().getFullYear()}, Julius Hecht.
-          </Typography>
+          </Text>
         </Container>
       </Box>
     </>

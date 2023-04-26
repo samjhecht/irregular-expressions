@@ -5,7 +5,6 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
 import rehypePrism from 'rehype-prism-plus'
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeHighlight from 'rehype-highlight'
 
@@ -18,6 +17,7 @@ export const EssayPost = defineDocumentType(() => ({
         date: { type: 'string', required: true },
         description: { type: 'string', required: false },
         thumbnailImage: { type: 'string', required: true },
+        status: { type: 'string', required: false }
     },
     computedFields: {
         readingTime: {
@@ -43,7 +43,8 @@ export const PoetryPost = defineDocumentType(() => ({
         title: { type: 'string', required: true },
         date: { type: 'string', required: true },
         description: { type: 'string', required: false },
-        thumbnailImage: { type: 'string', required: false }
+        thumbnailImage: { type: 'string', required: false },
+        status: { type: 'string', required: false }
     },
     computedFields: {
         readingTime: {
@@ -126,7 +127,6 @@ export default makeSource({
                 },
                 { behaviour: 'wrap' },
             ],
-            rehypeAccessibleEmojis,
         ],
     },
 })

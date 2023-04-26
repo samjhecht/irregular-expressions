@@ -1,18 +1,17 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Link from '../../components/link'
 import Layout from '../../components/layout'
-import { Container, Grid, Box, Stack, Typography, Divider } from '@mui/material';
+import { Box, GridItem, HStack, Container, Link, VStack, Text, Divider, Grid } from '@chakra-ui/react';
 import Head from 'next/head'
 import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allEssayPosts, EssayPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
-import MdxImage from 'components/MdxImage/MdxImage';
-import MdxCodeBlock from 'components/MdxCodeBlock';
-import BlogImage from 'components/BlogImage';
+import MdxImage from 'components/Mdx/MdxImage/MdxImage';
+import MdxCodeBlock from 'components/Mdx/MdxCodeBlock';
 import SubscribeBox from 'components/SubscribeBox';
 import ViewCounter from '../view-counter'
+import Mdx from 'components/Mdx/Mdx';
 
 type EssayPostProps = {
     post: EssayPost,
@@ -53,11 +52,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 }
 
-const components = { Link, Image, Box, BlogImage, Typography, MdxImage, MdxCodeBlock }
-
 export default function EssayTemplate({ post, previousPost, nextPost }: EssayPostProps) {
-
-    const MdxContent = useMDXComponent(post?.body.code)
 
     const router = useRouter()
     if (!router.isFallback && !post.slug) {
@@ -67,83 +62,74 @@ export default function EssayTemplate({ post, previousPost, nextPost }: EssayPos
     const postTitle = `${post?.title}` || 'Regular Expressions Essay'
     return (
         <Layout>
-            <Container maxWidth="md">
+            <Container>
                 {router.isFallback ? (
-                    <Typography>Loading…</Typography>
+                    <Text>Loading…</Text>
                 ) : (
                     <>
                         <Head>
                             <title>{postTitle}</title>
                         </Head>
                         <Box itemScope itemType="http://schema.org/Article">
-                            <Typography itemProp="headline" sx={{
+                            <Text itemProp="headline" sx={{
                                 fontSize: "2rem",
-                                fontWeight: "bold",
+                                fontFamily: "Vulf Sans Bold",
                                 paddingBottom: "1rem",
                             }}>
                                 {postTitle}
-                            </Typography>
-                            <Stack
-                                direction="row"
+                            </Text>
+                            <HStack
                                 justifyContent="space-between"
                                 alignItems="center"
                                 spacing={2}
                             >
-                                <Typography variant="subtitle1" sx={{
+                                <Text variant="subtitle1" sx={{
                                     paddingBottom: "1rem",
                                     paddingTop: "0.5rem"
                                 }}>
                                     {format(parseISO(post.date), "LLLL d, yyyy")}
-                                </Typography>
+                                </Text>
                                 <ViewCounter slug={post.slug} trackView={true} />
-                            </Stack>
+                            </HStack>
                         </Box>
-                        <MdxContent components={components} />
+                        <Mdx code={post?.body.code} />
                     </>
                 )}
                 <Box mt={4}>
                     <br /><br /><br />
-                    <Divider light />
+                    <Divider />
                     <br />
                 </Box>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
+                <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={4}>
+                    <GridItem>
                         <Box
-                            sx={{
-                                marginTop: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                            }}
+                            mt={1}
+                            display="flex"
+                            flexDirection="column"
+                            alignItems="center"
                         >
-                            <Stack
-                                direction="column"
-                                alignItems="left"
-                                alignContent="start"
-                                spacing={1}
-                                mt={2}
-                            >
-                                <Typography variant="h6" sx={{ fontWeight: "bold" }}>More Essays</Typography>
-                                <Box>
-                                    {previousPost && (
-                                        <Link href={`/essays/${previousPost.slug}`} rel="prev">
-                                            Previous: {previousPost.title}
-                                        </Link>
-                                    )}
-                                </Box>
+                            <VStack alignItems="left" alignContent="start" spacing={1} mt={2}>
+                                <Text fontSize="xl" fontWeight="bold">More Essays</Text>
                                 <Box>
                                     {nextPost && (
                                         <Link href={`/essays/${nextPost.slug}`} rel="next">
-                                            Next: {nextPost.title}
+                                            <Text fontStyle="italic">Next: {nextPost.title}</Text>
                                         </Link>
                                     )}
                                 </Box>
-                            </Stack>
+                                <Box>
+                                    {previousPost && (
+                                        <Link href={`/essays/${previousPost.slug}`} rel="prev">
+                                            <Text fontStyle="italic">Previous: {previousPost.title}</Text>
+                                        </Link>
+                                    )}
+                                </Box>
+                            </VStack>
                         </Box>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
+                    </GridItem>
+                    <GridItem>
                         <SubscribeBox />
-                    </Grid>
+                    </GridItem>
                 </Grid>
             </Container>
         </Layout>
