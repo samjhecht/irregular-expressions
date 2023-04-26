@@ -3,12 +3,8 @@ import ErrorPage from 'next/error'
 import Layout from '../../components/layout'
 import { Box, GridItem, HStack, Container, Link, VStack, Text, Divider, Grid } from '@chakra-ui/react';
 import Head from 'next/head'
-import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allEssayPosts, EssayPost } from "contentlayer/generated";
-import { useMDXComponent } from 'next-contentlayer/hooks'
-import MdxImage from 'components/Mdx/MdxImage/MdxImage';
-import MdxCodeBlock from 'components/Mdx/MdxCodeBlock';
 import SubscribeBox from 'components/SubscribeBox';
 import ViewCounter from '../view-counter'
 import Mdx from 'components/Mdx/Mdx';

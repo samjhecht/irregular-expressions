@@ -1,4 +1,4 @@
-import { Spacer, Flex, Image, Link, Text, Box, VStack, HStack, Grid, GridItem } from '@chakra-ui/react';
+import { Image, Link, Text, Box, VStack, HStack, Grid, GridItem } from '@chakra-ui/react';
 import Layout from '../components/layout';
 
 export default function About() {

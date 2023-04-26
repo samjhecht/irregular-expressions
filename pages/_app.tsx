@@ -1,9 +1,7 @@
 
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { ChakraProvider, CSSReset } from '@chakra-ui/react';
-// import { CacheProvider } from '@chakra-ui/next-js';
-import { Global } from '@emotion/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../src/createEmotionCache';
 import Fonts from '../src/fonts';

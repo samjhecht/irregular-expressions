@@ -1,5 +1,5 @@
 
-import { AspectRatio, Stack, chakra } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
 import React from 'react';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { Box, Text } from '@chakra-ui/react';
