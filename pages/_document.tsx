@@ -1,39 +1,3 @@
-// import * as React from 'react';
-// import theme from '../src/theme';
-// import { ColorModeScript } from '@chakra-ui/react'
-// import NextDocument, {
-//   Html,
-//   Head,
-//   Main,
-//   NextScript,
-// } from 'next/document';
-
-
-// export default class Document extends NextDocument {
-//   render() {
-//     return (
-//       <Html>
-//         <Head>
-//           <link
-//             rel="alternate"
-//             type="application/rss+xml"
-//             title="irregular-expressions.com rss feed"
-//             href="/rss.xml"
-//           />
-//           <meta name="theme-color" content={theme.colors.primary} />
-//           <link rel="shortcut icon" href="/favicon.ico" />
-//         </Head>
-//         <body>
-//           {/* Make Color mode to persists when you refresh the page. */}
-//           <ColorModeScript />
-//           <Main />
-//           <NextScript />
-//         </body>
-//       </Html>
-//     )
-//   }
-// }
-
 
 import * as React from 'react';
 import Document, {
@@ -125,8 +89,6 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
 
   const initialProps = await Document.getInitialProps(ctx);
 
-  // This is important. It prevents Emotion to render invalid HTML.
-  // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style) => (
     <style
@@ -143,3 +105,39 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
     styledComponentStyles: sheet.getStyleElement(),
   };
 };
+
+// import * as React from 'react';
+// import theme from '../src/theme';
+// import { ColorModeScript } from '@chakra-ui/react'
+// import NextDocument, {
+//   Html,
+//   Head,
+//   Main,
+//   NextScript,
+// } from 'next/document';
+
+
+// export default class Document extends NextDocument {
+//   render() {
+//     return (
+//       <Html>
+//         <Head>
+//           <link
+//             rel="alternate"
+//             type="application/rss+xml"
+//             title="irregular-expressions.com rss feed"
+//             href="/rss.xml"
+//           />
+//           <meta name="theme-color" content={theme.colors.primary} />
+//           <link rel="shortcut icon" href="/favicon.ico" />
+//         </Head>
+//         <body>
+//           {/* Make Color mode to persists when you refresh the page. */}
+//           <ColorModeScript />
+//           <Main />
+//           <NextScript />
+//         </body>
+//       </Html>
+//     )
+//   }
+// }

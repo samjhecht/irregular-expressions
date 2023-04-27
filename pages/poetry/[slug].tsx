@@ -1,14 +1,14 @@
+
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Layout from '../../components/layout'
 import Head from 'next/head'
-import Image from 'next/image';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts, PoetryPost } from "contentlayer/generated";
-import { useMDXComponent } from 'next-contentlayer/hooks'
 import SubscribeBox from '../../components/SubscribeBox'
 import ViewCounter from '../view-counter';
 import { Box, GridItem, HStack, Container, Link, VStack, Text, Divider, Grid } from '@chakra-ui/react';
+import Mdx from 'components/Mdx/Mdx';
 
 type PoetryPostProps = {
     post: PoetryPost,
@@ -38,7 +38,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         // Only assign nextPost if postIndex is not zero
         nextPost = allPoetryPosts[postIndex - 1] || null;
     }
-
+    
     return {
         props: {
             post,
@@ -48,12 +48,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 }
 
-const components = { Image, Box, Text }
-
 
 export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPostProps) {
-
-    const MdxContent = useMDXComponent(post?.body.code)
 
     const router = useRouter()
     if (!router.isFallback && !post.slug) {
@@ -93,7 +89,8 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
                                 <ViewCounter slug={post.slug} trackView={true} />
                             </HStack>
                         </Box>
-                        <MdxContent components={components} />
+                        {/* <MdxContent components={components} /> */}
+                        <Mdx code={post?.body.code} />
                     </>
                 )}
                 <Box mt={4}>

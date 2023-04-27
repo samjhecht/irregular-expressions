@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Layout from '../../components/layout'
@@ -47,6 +48,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         },
     };
 }
+
 
 export default function EssayTemplate({ post, previousPost, nextPost }: EssayPostProps) {
 
