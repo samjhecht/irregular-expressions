@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/rss.mjs",
+    "build": "npm run contentlayer:build && next build && node scripts/rss.mjs",
     "postbuild": "node ./scripts/generate-sitemap.mjs",
     "start": "next start",
     "contentlayer:build": "contentlayer build"
