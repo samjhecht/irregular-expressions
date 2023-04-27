@@ -142,3 +142,4 @@ dist
 .contentlayer
 
 public/rss.xml
+public/sitemap.xml
