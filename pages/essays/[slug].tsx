@@ -9,7 +9,7 @@ import { compareDesc, format, parseISO } from "date-fns";
 import { allEssayPosts, EssayPost } from "contentlayer/generated";
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import MdxImage from 'components/MdxImage/MdxImage';
-import MdxCodeBlock from 'components/MdxCodeBlock';
+import MdxCodeBlock from 'components/Mdx/MdxCodeBlock';
 import BlogImage from 'components/BlogImage';
 import SubscribeBox from 'components/SubscribeBox';
 import ViewCounter from '../view-counter'

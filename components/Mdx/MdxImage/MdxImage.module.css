@@ -1,0 +1,8 @@
+.figure {
+    display: block;
+}
+
+.figcaption {
+    /* font-size: 80%; */
+    display: block;
+}

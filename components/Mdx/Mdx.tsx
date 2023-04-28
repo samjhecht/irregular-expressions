@@ -3,7 +3,7 @@
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { Box, Typography } from '@mui/material';
 import MdxImage from 'components/MdxImage/MdxImage';
-import MdxCodeBlock from 'components/MdxCodeBlock';
+import MdxCodeBlock from 'components/Mdx/MdxCodeBlock';
 
 
 // function RoundedImage({props}: any) {
