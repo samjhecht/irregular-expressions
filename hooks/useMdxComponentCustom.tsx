@@ -9,7 +9,7 @@ const getMDXComponent = (code, globals = {}) => {
   return fn(...Object.values(scope)).default;
 };
 
-export const useMDXComponent = (code, globals = {}) => {
+export const useMDXComponentCustom = (code, globals = {}) => {
   return React.useMemo(() => getMDXComponent(code, globals), [code, globals]);
 };
 
