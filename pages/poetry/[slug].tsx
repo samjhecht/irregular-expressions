@@ -89,7 +89,6 @@ export default function PoemTemplate({ post, previousPost, nextPost }: PoetryPos
                                 <ViewCounter slug={post.slug} trackView={true} />
                             </HStack>
                         </Box>
-                        {/* <MdxContent components={components} /> */}
                         <Mdx code={post?.body.code} />
                     </>
                 )}

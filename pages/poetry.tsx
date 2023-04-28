@@ -124,7 +124,7 @@ export default function Poetry({ posts }: Props) {
                                             <Image
                                                 src={poem.thumbnailImage}
                                                 alt={poem.title}
-                                                layout="fill"
+                                                fill
                                                 style={{ objectFit: 'cover' }}
                                             />
                                             </Link>
