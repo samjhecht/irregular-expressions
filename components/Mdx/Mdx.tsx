@@ -1,8 +1,8 @@
 
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
-// import { useMDXComponentCustom } from 'hooks/useMdxComponentCustom';
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import { useMDXComponentCustom } from 'hooks/useMdxComponentCustom';
+// import { useMDXComponent } from 'next-contentlayer/hooks'
 import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import MdxImage from './MdxImage/MdxImage';
@@ -138,8 +138,8 @@ interface MdxProps {
 }
 
 export default function Mdx({ code }: MdxProps) {
-    // const Component = useMDXComponentCustom(code, { createElement: React.createElement });
-    const Component = useMDXComponent(code);
+    const Component = useMDXComponentCustom(code, { createElement: React.createElement });
+    // const Component = useMDXComponent(code);
 
     return (
         <article>

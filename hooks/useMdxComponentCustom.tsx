@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { _jsx_runtime as _jsx } from '../jsx-runtime.cjs';
+import { _jsx_runtime as _jsx } from '../jsx-runtime';
 
 export const getMDXComponent = (code: string, globals: object = {}): any => {
   const scope = { React, ReactDOM, _jsx, ...globals };
