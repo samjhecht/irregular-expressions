@@ -1,121 +1,112 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Button, Box, TextField, Typography } from '@mui/material';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Button, Box, Input, Text, useToast } from '@chakra-ui/react';
+import { FormControl, VStack, FormErrorMessage } from "@chakra-ui/react";
+import { Formik, Field } from "formik";
 
 
-const SubscribeBox: React.FC = () => {
-    const [open, setOpen] = React.useState(false);
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
-    const [hasError, setError] = useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleSubmit = async (evt: React.FormEvent) => {
-        evt.preventDefault();
-
-        if (!email) {
-            setError(true);
-            setMessage('Email address is required.');
-            return;
-        }
-
-        if (!/\S+@\S+\.\S+/.test(email)) {
-            setError(true);
-            setMessage('Please enter a valid email address');
-            return;
-        }
-
-        // Send a request to my API with the user's email address.
-        const res = await fetch('/api/subscribe', {
-            body: JSON.stringify({
-                email: email,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST',
-        });
-
-        const { error } = await res.json();
-
-        if (error) {
-            // If there was an error, update the message in state.
-            setError(true);
-            setMessage(error);
-
-            return;
-        }
-
-        // 5. Clear the input value and show a success message.
-        setEmail('');
-        setError(false)
-        setMessage('Success! 🎉 You are now subscribed!');
-        setTimeout(() => {
-            setOpen(false);
-        }, 1200);
-    };
-
-    const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(evt.target.value);
-    };
+const SubscribeBox = () => {
+    const toast = useToast();
 
     return (
-        <>
-            <Box
-                sx={{
-                    marginTop: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
-                        Subscribe
-                    </Typography>
-                    <TextField
-                        required
-                        fullWidth
-                        margin="dense"
-                        id="email"
-                        label="Your email..."
-                        name="email"
-                        onChange={handleChange}
-                        autoComplete="email"
-                        value={email}
-                        sx={{
-                            '&:focus': {
-                                borderColor: 'blue.500',
-                                boxShadow: '0 0 0 0.25rem #92CBDC',
-                            },
-                        }}
-                    />
-                    {message && (
-                        <Typography color={hasError ? "error" : "success"} variant="subtitle2" gutterBottom>
-                            {message}
-                        </Typography>
+        <Box
+            mt={3}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+        >
+            <Box bg="white" p={6} rounded="md" w={64}>
+                <Formik
+                    initialValues={{
+                        email: "",
+                    }}
+                    onSubmit={async (values, { setSubmitting, setStatus }) => {
+                        // Clear previous status
+                        setStatus(null);
+
+                        try {
+                            const res = await fetch('/api/subscribe', {
+                                body: JSON.stringify({
+                                    email: values.email,
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                method: 'POST',
+                            });
+
+                            const data = await res.json();
+
+                            if (data.error) {
+                                setStatus({ error: data.error });
+                                return;
+                            }
+
+                            setStatus({ success: true });
+
+                            values.email = "";
+                            toast({
+                                title: "Success!",
+                                description: "You are now subscribed! 🎉",
+                                status: "success",
+                                duration: 3000,
+                                isClosable: true,
+                            });
+
+                        } catch (error) {
+                            setStatus({ error: "An unexpected error occurred. Please try again later." });
+                        } finally {
+                            setSubmitting(false);
+                        }
+                    }}
+                >
+                    {({ handleSubmit, errors, touched, status, isSubmitting }) => (
+                        <form onSubmit={handleSubmit}>
+                            <VStack spacing={4} align="flex-start">
+                                <Text fontSize="xl" fontWeight="bold" mb="2">
+                                    Subscribe
+                                </Text>
+                                <FormControl isInvalid={!!errors.email && touched.email}>
+                                    <Field
+                                        as={Input}
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="Your email address..."
+                                        variant="filled"
+                                        validate={(value) => {
+                                            let error;
+
+                                            if (value == '') {
+                                                error = "Email is required";
+                                            } else if (!/\S+@\S+\.\S+/.test(value)) {
+                                                error = "Please enter a valid email address";
+                                            }
+
+                                            return error;
+                                        }}
+                                    />
+                                    <FormErrorMessage>{errors.email}</FormErrorMessage>
+                                </FormControl>
+                                {status && status.error && (
+                                    <Text color="red.500" fontSize="sm" mt={2}>{status.error}</Text>
+                                )}
+                                <Button
+                                    type="submit"
+                                    colorScheme="teal"
+                                    width="full"
+                                    bg="black"
+                                    color="white"
+                                    isLoading={isSubmitting}
+                                >
+                                    Sign Up
+                                </Button>
+                            </VStack>
+                        </form>
                     )}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        onClick={handleSubmit}
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Sign Up
-                    </Button>
-                </Box>
+                </Formik>
             </Box>
-        </>
+        </Box>
     );
-};
+}
 
 export default SubscribeBox;

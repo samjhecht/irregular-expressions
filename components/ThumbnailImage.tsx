@@ -1,5 +1,4 @@
-import { Box } from '@mui/material';
-import Link from '../components/link';
+import { Link, Box } from '@chakra-ui/react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -31,7 +30,7 @@ const ThumbnailImage = ({ title, src, slug }: Props) => {
   return (
     <Box>
       {slug ? (
-        <Link as={`/essays/${slug}`} href="/essays/[slug]" aria-label={title}>
+        <Link href={`/essays/${slug}`}>
           {image}
         </Link>
       ) : (

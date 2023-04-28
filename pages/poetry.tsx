@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { List, ListItem, Button, Stack, Typography, Box } from '@mui/material';
+import { LinkBox, LinkOverlay, Text, Spacer, Box, Flex, Button, Link } from '@chakra-ui/react';
 import Layout from '../components/layout'
+import Image from 'next/image';
 import Head from 'next/head'
-import Link from '../components/link';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPoetryPosts } from "contentlayer/generated";
-import PoetryThumbnailImage from '../components/PoetryThumbnail';
+import { useMediaQuery } from '@chakra-ui/react';
 
 const PAGE_SIZE = 10;
 
@@ -40,6 +40,7 @@ export async function getStaticProps(): Promise<{ props: Props }> {
 export default function Poetry({ posts }: Props) {
     const [visiblePosts, setVisiblePosts] = useState<PoetryPostFrontMatter[]>([]);
     const [numVisible, setNumVisible] = useState(PAGE_SIZE);
+    const [isLargerThanMD] = useMediaQuery('(min-width: 48em)');
 
     useEffect(() => {
         setVisiblePosts(posts.slice(0, numVisible));
@@ -53,8 +54,8 @@ export default function Poetry({ posts }: Props) {
     };
 
     const showMoreButton = posts.length > visiblePosts.length && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2rem' }}>
-            <Button variant="outlined" onClick={handleShowMore}>
+        <Box display="flex" justifyContent="center" mt="2rem">
+            <Button variant="outline" onClick={handleShowMore}>
                 Show More Poems
             </Button>
         </Box>
@@ -63,7 +64,7 @@ export default function Poetry({ posts }: Props) {
     if (visiblePosts.length === 0) {
         return (
             <Layout>
-                <Typography variant="body1">There are no poems yet.</Typography>
+                <Text>No poems yet.</Text>
             </Layout>
         );
     }
@@ -74,93 +75,67 @@ export default function Poetry({ posts }: Props) {
                 <Head>
                     <title>{`Irregular Expressions Poetry`}</title>
                 </Head>
-                <List>
+                <Flex direction="column">
                     {visiblePosts.map((poem) => {
                         const title = poem.title || poem.slug
                         const poemDescription = poem.description || null
 
                         return (
-                            <ListItem
+                            <Flex
                                 key={`/poetry${poem.slug}`}
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'stretch'
-                                }}
+                                direction="row"
+                                alignItems="space-between"
+                                marginBottom="2rem"
                             >
-                                <Box
-                                    sx={{
-                                        width: {
-                                            xs: '100%',
-                                            sm: '100%',
-                                            md: '70%',
-                                            lg: '70%',
-                                            xl: '70%',
-                                        },
-                                        height: '100%',
-                                    }}
+                                <LinkBox
+                                    width={{ base: "100%", sm: "100%", md: "70%" }}
+                                    height="100%"
+                                    paddingRight={{ base: "0", md: "1rem" }}
                                 >
-                                    <Stack>
-                                        <Link
-                                            href={'/poetry/' + poem.slug}
-                                            sx={{
-                                                color: 'primary.black',
-                                                textDecoration: 'none',
-                                            }}>
-                                            <Typography
-                                                variant="h5"
-                                                sx={{ textDecoration: "none", fontWeight: 'bold' }}
-                                            >
-                                                {title}
-                                            </Typography>
-                                        </Link>
-                                        <Typography
-                                            color="text.black"
-                                            variant="body2"
-                                            sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}
+                                    <LinkOverlay
+                                        href={'/poetry/' + poem.slug}
+                                        textDecoration="none"
+                                        _hover={{ textDecoration: "none" }}
+                                    >
+                                        <Text
+                                            fontSize="2xl"
+                                            textDecoration="none"
+                                            fontFamily="Vulf Sans Bold"
                                         >
-                                            {format(parseISO(poem.date), "LLLL d, yyyy")}
-                                        </Typography>
-                                        <Link
-                                            href={'/poetry/' + poem.slug}
-                                            sx={{
-                                                variant: 'body2',
-                                                fontWeight: 'normal',
-                                                textDecoration: 'none',
-                                            }}
-                                        >
-                                            <Typography itemProp="description">
-                                                {poemDescription}
-                                            </Typography>
-                                        </Link>
-                                    </Stack>
-                                </Box>
-                                {poem.thumbnailImage && (
+                                            {title}
+                                        </Text>
+                                    </LinkOverlay>
+                                    <Text fontSize="sm" pt="0.5rem" pb="1rem">
+                                        {format(parseISO(poem.date), "LLLL d, yyyy")}
+                                    </Text>
+                                        <Text>{poemDescription}</Text>
+                                </LinkBox>
+                                <Spacer />
+                                {poem.thumbnailImage && isLargerThanMD && (
                                     <Box
                                         width="30%"
                                         height="100%"
-                                        sx={{
-                                            width: '30%',
-                                            display: {
-                                                xs: 'none',
-                                                sm: 'none',
-                                                md: 'flex',
-                                                lg: 'flex',
-                                                xl: 'flex',
-                                            },
-                                            marginLeft: '0.5rem',
-                                        }}
+                                        marginLeft={{ base: "0", md: "0.5rem" }}
+                                        display={{ base: "none", xs: "none", sm: "none", md: "flex", lg: "flex", xl: "flex" }}
                                     >
-                                        <PoetryThumbnailImage
-                                            src={poem.thumbnailImage}
-                                            title={poem.title}
-                                            slug={poem.slug}
-                                        />
+
+                                        <Box width="150px" height="150px" position="relative">
+                                        <Link href={`/poetry/${poem.slug}`} aria-label={title}>
+                                            <Image
+                                                src={poem.thumbnailImage}
+                                                alt={poem.title}
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                            </Link>
+                                        </Box>
+
                                     </Box>
                                 )}
-                            </ListItem>
+                            </Flex>
                         )
                     })}
-                </List>
+                </Flex>
                 {showMoreButton}
             </Layout>
         </>

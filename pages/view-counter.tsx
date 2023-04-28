@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import useSWR from 'swr';
-import { Box, Typography } from '@mui/material';
+import { Box, Text } from '@chakra-ui/react';
 
 type PostView = {
     slug: string;
@@ -68,12 +68,12 @@ export default function ViewCounter({
                     ></path>
                 </g>
             </svg>
-            <Typography variant="subtitle1" sx={{
+            <Text variant="subtitle1" sx={{
                 fontStyle: 'italic',
                 marginLeft: "0.4rem",
             }}>
                 {data ? `${views.toLocaleString()} views` : ''}
-            </Typography>
+            </Text>
         </Box>
     );
 }

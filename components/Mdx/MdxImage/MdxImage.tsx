@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import { Box } from '@mui/material';
+import { Box } from '@chakra-ui/react';
 
 type MdxImageProps = {
   width: number;
@@ -42,36 +42,36 @@ function MdxImage({
 
   if (figcaption) {
     return (
-        <ImageWrapper>
-        <Box 
-            component="figure" 
-            display="flex"
-            textAlign={alignment}
-            flexDirection="column"
-            alignContent={alignment}
-            justifyContent={alignment}
-            alignItems={alignment}
-            >
-            <Image src={src} alt={alt} width={width}/>
-            <StyledImageFigcaption>{figcaption}</StyledImageFigcaption>
+      <ImageWrapper>
+        <Box
+          as="figure"
+          display="flex"
+          textAlign={alignment}
+          flexDirection="column"
+          alignContent={alignment}
+          justifyContent={alignment}
+          alignItems={alignment}
+        >
+          <Image src={src} alt={alt} width={width} />
+          <StyledImageFigcaption>{figcaption}</StyledImageFigcaption>
         </Box>
-        </ImageWrapper>
+      </ImageWrapper>
     );
   }
 
   return (
     <ImageWrapper>
-        <Box 
-            component="figure" 
-            display="flex"
-            textAlign={alignment}
-            flexDirection="column"
-            alignContent={alignment}
-            justifyContent={alignment}
-            alignItems={alignment}
-        >
-            <Image src={src} alt={alt} width={width}/>
-        </Box>
+      <Box
+        as="figure"
+        display="flex"
+        textAlign={alignment}
+        flexDirection="column"
+        alignContent={alignment}
+        justifyContent={alignment}
+        alignItems={alignment}
+      >
+        <Image src={src} alt={alt} width={width} />
+      </Box>
     </ImageWrapper>
   );
 }

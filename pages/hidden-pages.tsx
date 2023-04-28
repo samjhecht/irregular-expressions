@@ -1,26 +1,78 @@
-import { List, ListItem, Stack, Typography, Box } from '@mui/material';
+
 import Layout from '../components/layout'
 import Head from 'next/head'
-import Link from '../components/link';
-import ThumbnailImage from '../components/ThumbnailImage';
 import { compareDesc, format, parseISO } from "date-fns";
 import { allHiddenPages, HiddenPage } from "contentlayer/generated";
+import ViewCounter from './view-counter';
+import { LinkBox, LinkOverlay, Spacer, Text, Box, Flex, Button, Link, VStack } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useMediaQuery } from '@chakra-ui/react';
 
-export async function getStaticProps() {
-    const posts: HiddenPage[] = allHiddenPages
-        .filter((post) => post.status !== 'draft')
-        .sort((a, b) => {
-            return compareDesc(new Date(a.date), new Date(b.date))
-        })
-    return { props: { posts } }
+
+const PAGE_SIZE = 10;
+
+type HiddenPageFrontmatter = {
+    title: string
+    date: string
+    description?: string | null
+    thumbnailImage?: string | null
+    status?: string | null
+    slug: string
 }
 
-export default function HiddenPagesHome({ posts }: { posts: HiddenPage[] }) {
+type Props = {
+    posts: HiddenPageFrontmatter[];
+};
 
-    if (posts.length === 0) {
+export async function getStaticProps(): Promise<{ props: Props }> {
+    const posts: HiddenPageFrontmatter[] = allHiddenPages
+    .filter((post) => !post.status || post.status !== 'draft')
+    .map((post) => {
+        return {
+            title: post.title,
+            date: post.date,
+            description: post.description || null,
+            thumbnailImage: post.thumbnailImage || null,
+            slug: post.slug,
+        };
+    }).sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date));
+    });
+
+    return { props: { posts } };
+}
+
+
+export default function EssaysHome({ posts }: { posts: HiddenPage[] }) {
+    const [visiblePosts, setVisiblePosts] = useState<HiddenPageFrontmatter[]>([]);
+    const [numVisible, setNumVisible] = useState(PAGE_SIZE);
+
+    const [isLargerThanMD] = useMediaQuery('(min-width: 48em)');
+
+    useEffect(() => {
+        setVisiblePosts(posts.slice(0, numVisible));
+    }, [numVisible, posts]);
+
+    const handleShowMore = () => {
+        const numPosts = posts.length;
+        const remainingPosts = numPosts - numVisible;
+        const numToAdd = Math.min(PAGE_SIZE, remainingPosts);
+        setNumVisible(numVisible + numToAdd);
+    };
+
+    const showMoreButton = posts.length > visiblePosts.length && (
+        <Box display="flex" justifyContent="center" mt="2rem">
+            <Button variant="outline" onClick={handleShowMore}>
+                Show More Poems
+            </Button>
+        </Box>
+    );
+
+    if (visiblePosts.length === 0) {
         return (
             <Layout>
-                <Typography variant="body1">There are no Hidden Pages yet.</Typography>
+                <Text variant="body1">There are no hidden pages yet.</Text>
             </Layout>
         )
     }
@@ -29,86 +81,71 @@ export default function HiddenPagesHome({ posts }: { posts: HiddenPage[] }) {
         <>
             <Layout>
                 <Head>
-                    <title>{`Irregular Expressions Hidden Pages`}</title>
+                    <title>{`Irregular Expressions Essays`}</title>
                 </Head>
-                <List>
-                    {posts.map((post) => {
+                <Flex direction="column">
+                    {visiblePosts.map((post) => {
                         const title = post.title || post.slug
-                        const blogDescription = post.description || null
+                        const essayDescription = post.description || null
 
                         return (
-                            <ListItem
-                                key={`/blog${post.slug}`}
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'stretch'
-                                }}
+                            <Flex
+                                key={`/hidden-pages${post.slug}`}
+                                direction="row"
+                                marginBottom="2rem"
                             >
-                                <Box
-                                    sx={{
-                                        width: {
-                                            xs: '100%',
-                                            sm: '100%',
-                                            md: '70%',
-                                            lg: '70%',
-                                            xl: '70%',
-                                        },
-                                        height: '100%',
-                                    }}
-                                >
-                                    <Stack>
-                                        <Link
+                                <LinkBox>
+                                    <VStack
+                                        height="100%"
+                                        align="flex-start"
+                                        spacing={1}
+                                        paddingRight={{ base: "0", md: "1rem" }}
+                                    >
+                                        <LinkOverlay
                                             href={'/hidden-pages/' + post.slug}
-                                            sx={{ textDecoration: 'none' }}>
-                                            <Typography
-                                                variant="h5"
-                                                sx={{ textDecoration: "none", fontWeight: 'bold' }}
+                                            textDecoration="none"
+                                            _hover={{ textDecoration: "none" }}
+                                        >
+                                            <Text
+                                                fontSize="xl"
+                                                textDecoration="none"
+                                                fontFamily="Vulf Sans Bold"
                                             >
                                                 {title}
-                                            </Typography>
-                                        </Link>
-                                        <Typography sx={{ paddingBottom: "1rem", paddingTop: "0.5rem" }}>
+                                            </Text>
+                                        </LinkOverlay>
+                                        <Text fontSize="sm" pt="0.5rem" pb="1rem">
                                             {format(parseISO(post.date), "LLLL d, yyyy")}
-                                        </Typography>
-                                        <Link
-                                            href={'/hidden-pages/' + post.slug}
-                                            sx={{
-                                                variant: 'body2',
-                                                fontWeight: 'normal',
-                                                textDecoration: 'none',
-                                            }}
-                                        >
-                                            <Typography itemProp="description">
-                                                {blogDescription}
-                                            </Typography>
-                                        </Link>
-                                    </Stack>
-                                </Box>
-                                <Box
-                                    width="30%"
-                                    height="100%"
-                                    sx={{
-                                        width: '30%',
-                                        display: {
-                                            xs: 'none',
-                                            sm: 'none',
-                                            md: 'flex',
-                                            lg: 'flex',
-                                            xl: 'flex',
-                                        },
-                                        marginLeft: '0.5rem',
-                                    }}
-                                >
-                                    <ThumbnailImage
-                                        src={post.thumbnailImage}
-                                        title={post.title}
-                                        slug={post.slug}
-                                    />
-                                </Box>
-                            </ListItem>
+                                        </Text>
+                                        <Text>{essayDescription}</Text>
+                                        <ViewCounter slug={post.slug} trackView={false} />
+                                    </VStack>
+                                </LinkBox>
+                                <Spacer />
+                                {post.thumbnailImage && isLargerThanMD && (
+                                    <Box
+                                        width="30%"
+                                        height="100%"
+                                        marginLeft={{ base: "0", md: "0.5rem" }}
+                                    >
+                                        <Box width="229px" height="229px" position="relative">
+                                            <Link href={`/hidden-pages/${post.slug}`} aria-label={title}>
+                                                <Image
+                                                    src={post.thumbnailImage}
+                                                    alt={post.title}
+                                                    fill
+                                                    style={{ objectFit: 'cover' }}
+                                                />
+                                            </Link>
+                                        </Box>
+
+                                    </Box>
+                                )}
+                            </Flex>
                         )
                     })}
-                </List>
+                </Flex>
+                {showMoreButton}
             </Layout>
         </>
     )
