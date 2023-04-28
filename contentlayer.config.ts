@@ -62,33 +62,6 @@ export const PoetryPost = defineDocumentType(() => ({
     },
 }))
 
-export const HiddenPage = defineDocumentType(() => ({
-    name: 'HiddenPage',
-    filePathPattern: '_hidden-pages/*.mdx',
-    contentType: 'mdx',
-    fields: {
-        title: { type: 'string', required: true },
-        date: { type: 'string', required: true },
-        description: { type: 'string', required: false },
-        thumbnailImage: { type: 'string', required: true },
-        status: { type: 'string', required: false }
-    },
-    computedFields: {
-        readingTime: {
-            type: 'json',
-            resolve: (doc) => readingTime(doc.body.raw)
-        },
-        slug: {
-            type: 'string',
-            resolve: (doc) => doc._raw.sourceFileName.replace('.mdx', ''),
-        },
-        url: {
-            type: 'string',
-            resolve: (post) => `/hidden-pages/${post._raw.flattenedPath.replace(`${post._raw.sourceFileDir}/`, '')}`,
-        },
-    },
-}))
-
 const prettyCodeOptions = {
     theme: 'one-dark-pro',
 
@@ -109,7 +82,7 @@ const prettyCodeOptions = {
 
 export default makeSource({
     contentDirPath: 'content',
-    documentTypes: [PoetryPost, HiddenPage, EssayPost],
+    documentTypes: [PoetryPost, EssayPost],
     mdx: {
         remarkPlugins: [remarkGfm],
         rehypePlugins: [
