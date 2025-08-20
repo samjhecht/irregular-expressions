@@ -22,6 +22,20 @@ export interface LLMErrorResponse {
 
 // LLM Lifecycle Data Model Types
 
+// Specific data types for different step examples
+export interface AttentionComputationData {
+  attentionWeights: number[][]
+  attendedValues: string[]
+  contextVector: string
+}
+
+export interface AttentionInputData {
+  queries: string[]
+  keys: string[]
+  values: string[]
+  sequenceLength: number
+}
+
 export interface RealDataExample {
   inputData: unknown
   outputData: unknown

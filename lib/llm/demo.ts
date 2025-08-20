@@ -2,6 +2,17 @@
 // This file demonstrates the key features implemented
 
 import { createDefaultLifecycle, ExampleGenerator } from './index'
+import { AttentionComputationData } from '../../types/llm'
+
+// Type guard function to check if data is AttentionComputationData
+function isAttentionComputationData(data: unknown): data is AttentionComputationData {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'attentionWeights' in data &&
+    Array.isArray((data as AttentionComputationData).attentionWeights)
+  )
+}
 
 export function runLLMLifecycleDemo() {
   console.log('🚀 LLM Lifecycle Data Model Demo\n')
@@ -48,7 +59,13 @@ export function runLLMLifecycleDemo() {
   const attentionExample = exampleGenerator.generateExampleForStep('attention-computation')
   if (attentionExample.success && attentionExample.example) {
     console.log(`   Attention example data type: ${attentionExample.example.dataType}`)
-    console.log(`   Attention matrix size: ${(attentionExample.example.outputData as any).attentionWeights?.length}x${(attentionExample.example.outputData as any).attentionWeights?.[0]?.length}`)
+    
+    if (isAttentionComputationData(attentionExample.example.outputData)) {
+      const attentionWeights = attentionExample.example.outputData.attentionWeights
+      console.log(`   Attention matrix size: ${attentionWeights.length}x${attentionWeights[0]?.length || 0}`)
+    } else {
+      console.log('   Attention data format not recognized')
+    }
   }
 
   // Demonstrate step hierarchy
