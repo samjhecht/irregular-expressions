@@ -10,6 +10,7 @@
     "contentlayer": "contentlayer build"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
     "@chakra-ui/icons": "latest",
     "@chakra-ui/next-js": "latest",
     "@chakra-ui/react": "latest",
@@ -18,13 +19,13 @@
     "@leafac/rehype-shiki": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@vercel/analytics": "latest",
-    "contentlayer": "latest",
+    "contentlayer": "^0.3.0",
     "date-fns": "latest",
     "formik": "latest",
     "framer-motion": "latest",
     "isomorphic-unfetch": "latest",
     "next": "latest",
-    "next-contentlayer": "latest",
+    "next-contentlayer": "^0.3.0",
     "pg": "latest",
     "react": "latest",
     "react-dom": "latest",
