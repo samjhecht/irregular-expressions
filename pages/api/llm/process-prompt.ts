@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import Anthropic from '@anthropic-ai/sdk'
 import { LLMProcessRequest, LLMProcessResponse, LLMErrorResponse } from '../../../types/llm'
-
-const MAX_PROMPT_LENGTH = 4000
-const DEFAULT_MODEL = 'claude-3-haiku-20240307'
+import { LLM_CONFIG } from '../../../config/llm'
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,9 +23,9 @@ export default async function handler(
       return res.status(400).json({ error: 'Prompt must be a string' })
     }
 
-    if (prompt.length > MAX_PROMPT_LENGTH) {
+    if (prompt.length > LLM_CONFIG.MAX_PROMPT_LENGTH) {
       return res.status(400).json({ 
-        error: `Prompt too long. Maximum length is ${MAX_PROMPT_LENGTH} characters` 
+        error: `Prompt too long. Maximum length is ${LLM_CONFIG.MAX_PROMPT_LENGTH} characters` 
       })
     }
 
@@ -44,7 +42,7 @@ export default async function handler(
       })
     }
 
-    const model = process.env.ANTHROPIC_MODEL || DEFAULT_MODEL
+    const model = LLM_CONFIG.DEFAULT_MODEL
 
     // Initialize Anthropic client
     const anthropic = new Anthropic({
@@ -56,7 +54,7 @@ export default async function handler(
     // Make API call to Anthropic
     const response = await anthropic.messages.create({
       model,
-      max_tokens: 1000,
+      max_tokens: LLM_CONFIG.MAX_TOKENS,
       messages: [
         {
           role: 'user',

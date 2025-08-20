@@ -7,7 +7,11 @@
     "build": "contentlayer build && next build",
     "postbuild": "node ./scripts/rss.mjs && node ./scripts/generate-sitemap.mjs",
     "start": "next start",
-    "contentlayer": "contentlayer build"
+    "contentlayer": "contentlayer build",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.60.0",
@@ -15,6 +19,7 @@
     "@chakra-ui/next-js": "latest",
     "@chakra-ui/react": "latest",
     "@chakra-ui/theme-tools": "latest",
+    "@emotion/react": "^11.14.0",
     "@emotion/styled": "latest",
     "@leafac/rehype-shiki": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -43,6 +48,9 @@
     "swr": "latest"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "latest",
     "@types/pg": "latest",
     "@types/prettier": "latest",
@@ -55,6 +63,9 @@
     "eslint-config-prettier": "latest",
     "feed": "latest",
     "globby": "latest",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "node-mocks-http": "^1.17.2",
     "prettier": "latest",
     "tsconfig-paths": "latest",
     "typescript": "latest"
