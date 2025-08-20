@@ -1,4 +1,4 @@
-import { Box, Text, Container } from '@chakra-ui/react';
+import { Box, Text, Container } from '@chakra-ui/react'
 
 const StickyFooter: React.FC = () => {
   return (
@@ -7,14 +7,14 @@ const StickyFooter: React.FC = () => {
         sx={{
           py: 3,
           px: 2,
-          mt: "auto",
+          mt: 'auto',
         }}
       >
         <Container maxWidth="sm">
           <Text
             color="text.primary"
-            fontFamily={"body"}
-            sx={{ fontSize: "0.92rem", whiteSpace: "nowrap" }}
+            fontFamily={'body'}
+            sx={{ fontSize: '0.92rem', whiteSpace: 'nowrap' }}
           >
             {` `}
             Copyright © {new Date().getFullYear()}, Julius Hecht.
@@ -22,7 +22,7 @@ const StickyFooter: React.FC = () => {
         </Container>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default StickyFooter;
+export default StickyFooter

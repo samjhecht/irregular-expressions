@@ -1,9 +1,11 @@
 # LLM Guide Step 12: Attention Mechanism Visualization
 
 ## Overview
+
 Create sophisticated D3.js visualizations to demonstrate transformer attention mechanisms, showing how tokens attend to each other during processing.
 
 ## Acceptance Criteria
+
 - [ ] Create interactive attention heatmap matrix
 - [ ] Animate attention weight calculations
 - [ ] Show multi-head attention with separate visualizations
@@ -17,25 +19,27 @@ Create sophisticated D3.js visualizations to demonstrate transformer attention m
 ### Attention Visualizations
 
 #### Attention Matrix Heatmap
+
 ```typescript
 interface AttentionVisualization {
-  attentionWeights: number[][]; // token x token matrix
-  tokens: string[];
-  heads: AttentionHead[];
-  layers: number;
-  currentLayer: number;
-  currentHead?: number;
+  attentionWeights: number[][] // token x token matrix
+  tokens: string[]
+  heads: AttentionHead[]
+  layers: number
+  currentLayer: number
+  currentHead?: number
 }
 
 interface AttentionHead {
-  id: number;
-  weights: number[][];
-  pattern: 'local' | 'global' | 'positional' | 'semantic';
-  description: string;
+  id: number
+  weights: number[][]
+  pattern: 'local' | 'global' | 'positional' | 'semantic'
+  description: string
 }
 ```
 
 #### Flow Diagram Components
+
 - Source and target token nodes
 - Weighted connections showing attention strength
 - Animated flow particles representing information transfer
@@ -45,6 +49,7 @@ interface AttentionHead {
 ### Interactive Features
 
 #### Attention Matrix Explorer
+
 - Hoverable cells showing exact attention weights
 - Row/column highlighting for token focus
 - Zoom capabilities for large sequences
@@ -52,6 +57,7 @@ interface AttentionHead {
 - Pattern recognition highlighting
 
 #### Multi-Head Visualization
+
 - Side-by-side comparison of attention heads
 - Animated transitions between heads
 - Pattern categorization and labeling
@@ -59,8 +65,9 @@ interface AttentionHead {
 - Ensemble attention combination
 
 #### Token Flow Animation
+
 1. **Query Generation**: Show how tokens create queries
-2. **Key Matching**: Visualize query-key dot products  
+2. **Key Matching**: Visualize query-key dot products
 3. **Weight Calculation**: Animate softmax normalization
 4. **Value Aggregation**: Show weighted value summation
 5. **Output Formation**: Demonstrate final representation
@@ -68,6 +75,7 @@ interface AttentionHead {
 ### D3.js Implementation
 
 #### Heatmap with Interactions
+
 - Color scales for attention weights
 - Smooth transitions between layers/heads
 - Interactive brushing and selection
@@ -75,6 +83,7 @@ interface AttentionHead {
 - Responsive grid layouts
 
 #### Network Diagrams
+
 - Force-directed layouts for attention flow
 - Edge weight representation through thickness/opacity
 - Node sizing based on attention received/given
@@ -82,6 +91,7 @@ interface AttentionHead {
 - Interactive node selection and focusing
 
 ## Implementation Notes
+
 - Generate synthetic but plausible attention patterns
 - Use educational approximations of real attention mechanisms
 - Focus on visual clarity over technical precision
@@ -89,6 +99,7 @@ interface AttentionHead {
 - Design for different sequence lengths
 
 ### Educational Storytelling
+
 - **Self-Attention**: How tokens look at other tokens in sequence
 - **Positional Patterns**: Attention to nearby vs distant tokens
 - **Semantic Relationships**: Content-based attention patterns
@@ -96,6 +107,7 @@ interface AttentionHead {
 - **Layer Evolution**: How attention patterns change through model depth
 
 ### Synthetic Data Generation
+
 - Create realistic attention patterns based on token relationships
 - Generate different heads with distinct specializations
 - Simulate layer-wise attention evolution
@@ -103,6 +115,7 @@ interface AttentionHead {
 - Make patterns educational for software engineers
 
 ## Definition of Done
+
 - Attention visualizations clearly demonstrate key concepts
 - Interactive features enhance learning experience
 - Performance remains smooth with complex matrices

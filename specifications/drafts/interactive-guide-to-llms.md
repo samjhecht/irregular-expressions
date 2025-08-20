@@ -2,11 +2,11 @@
 
 Your objective is to build the optimal interactive guide for helping someone understand how LLMs work.
 
-We are going to make it a non-discoverable page on my personal website, irregular-expressions.com.   
+We are going to make it a non-discoverable page on my personal website, irregular-expressions.com.
 
 On the page, the user will be able to insert a prompt for an LLM. The query will then get submitted to an LLM and we'll have the response and the prompt. The user will then be shown a diagram of the entire LLM chat lifecycle geared at helping them understand how LLMs work. The user should be able to click into steps to expand them and when they do, it should expand into showing additional steps. In some cases, the additional steps will also be expandable, depending on the complexity of the step.
 
-You should think deeply about how we should organize all of the text content.  
+You should think deeply about how we should organize all of the text content.
 
 Other Objectives When Creating the Flow:
 

@@ -1,9 +1,11 @@
 # LLM Guide Step 5: Basic Step Visualization
 
 ## Overview
+
 Create the foundational step visualization component that displays the LLM lifecycle as an interactive, expandable diagram.
 
 ## Acceptance Criteria
+
 - [ ] Create step visualization component
 - [ ] Implement expandable/collapsible step behavior
 - [ ] Show high-level LLM lifecycle steps
@@ -15,6 +17,7 @@ Create the foundational step visualization component that displays the LLM lifec
 ## Technical Details
 
 ### Core Component Structure
+
 - Main container for step visualization
 - Individual step components with expand/collapse
 - Visual connectors between steps
@@ -22,6 +25,7 @@ Create the foundational step visualization component that displays the LLM lifec
 - Integration with LLM lifecycle data model
 
 ### Step Display Features
+
 - Step title and description
 - Visual indicators for expandable steps
 - Progress flow visualization (arrows/connectors)
@@ -29,6 +33,7 @@ Create the foundational step visualization component that displays the LLM lifec
 - Real data examples when expanded
 
 ### Component Hierarchy
+
 ```typescript
 <StepVisualization>
   <StepContainer>
@@ -46,12 +51,14 @@ Create the foundational step visualization component that displays the LLM lifec
 ```
 
 ### State Management
+
 - Track which steps are expanded
 - Store real data examples for each step
 - Manage step navigation and progression
 - Handle step selection and focus
 
 ### Visual Design
+
 - Use Chakra UI components for consistency
 - Implement smooth expand/collapse animations
 - Color coding for different step types
@@ -59,6 +66,7 @@ Create the foundational step visualization component that displays the LLM lifec
 - Responsive layout for mobile/desktop
 
 ## Implementation Notes
+
 - Start with basic layout before adding animations
 - Use existing theme colors and spacing
 - Ensure keyboard accessibility
@@ -66,13 +74,15 @@ Create the foundational step visualization component that displays the LLM lifec
 - Keep initial version simple but extensible
 
 ## Step Categories
+
 1. **Input Processing** - Green theme, input icon
-2. **Tokenization** - Blue theme, tokenize icon  
+2. **Tokenization** - Blue theme, tokenize icon
 3. **Model Processing** - Purple theme, brain icon
 4. **Response Generation** - Orange theme, output icon
 5. **Output Processing** - Gray theme, filter icon
 
 ## Definition of Done
+
 - All 5 main steps display correctly
 - Expand/collapse functionality works smoothly
 - Real data from user prompt displays in steps

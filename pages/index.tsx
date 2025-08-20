@@ -1,9 +1,13 @@
-import { Text, Box, useBreakpointValue } from '@chakra-ui/react';
-import Layout from '../components/layout';
+import { Text, Box, useBreakpointValue } from '@chakra-ui/react'
+import Layout from '../components/layout'
 
 export default function Home() {
-
-  const bodyTextBreakpoints = useBreakpointValue({ base: 'xs', md: 'md', lg: 'md', xl: 'md' })
+  const bodyTextBreakpoints = useBreakpointValue({
+    base: 'xs',
+    md: 'md',
+    lg: 'md',
+    xl: 'md',
+  })
   // const bodyTextBreakpoints = useBreakpointValue({
   //   xxxs: '10px', // Value for xxxs breakpoint and above
   //   xxs: '12px', // Value for xxs breakpoint and above
@@ -25,7 +29,12 @@ export default function Home() {
         left="50%"
         transform="translate(-50%, -50%)"
       >
-        <Text fontFamily="body" textAlign="center" whiteSpace="nowrap" fontSize={bodyTextBreakpoints}>
+        <Text
+          fontFamily="body"
+          textAlign="center"
+          whiteSpace="nowrap"
+          fontSize={bodyTextBreakpoints}
+        >
           At my window
           <br />
           Watching the sun go
@@ -36,10 +45,15 @@ export default function Home() {
           <br />
           <br />
         </Text>
-        <Text textAlign="center" fontStyle="italic" whiteSpace="nowrap" fontSize={bodyTextBreakpoints}>
+        <Text
+          textAlign="center"
+          fontStyle="italic"
+          whiteSpace="nowrap"
+          fontSize={bodyTextBreakpoints}
+        >
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Townes Van Zandt
         </Text>
       </Box>
     </Layout>
-  );
+  )
 }

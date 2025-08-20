@@ -1,9 +1,11 @@
 # LLM Guide Step 14: Mobile Responsive Optimization
 
 ## Overview
+
 Optimize all visualizations and interactions for mobile devices, ensuring the educational experience works excellently across all screen sizes and input methods.
 
 ## Acceptance Criteria
+
 - [ ] Implement responsive breakpoints for all visualizations
 - [ ] Optimize D3.js animations for mobile performance
 - [ ] Create touch-friendly interaction patterns
@@ -17,28 +19,30 @@ Optimize all visualizations and interactions for mobile devices, ensuring the ed
 ### Responsive Design Strategy
 
 #### Breakpoint-Specific Layouts
+
 ```typescript
 interface ResponsiveConfig {
   mobile: {
-    maxWidth: 480;
-    simplifiedVisualizations: true;
-    reducedAnimations: boolean;
-    touchOptimized: true;
-  };
+    maxWidth: 480
+    simplifiedVisualizations: true
+    reducedAnimations: boolean
+    touchOptimized: true
+  }
   tablet: {
-    maxWidth: 768;
-    partialComplexity: true;
-    hybridInteractions: boolean;
-  };
+    maxWidth: 768
+    partialComplexity: true
+    hybridInteractions: boolean
+  }
   desktop: {
-    maxWidth: Infinity;
-    fullFeatures: true;
-    fullAnimations: boolean;
-  };
+    maxWidth: Infinity
+    fullFeatures: true
+    fullAnimations: boolean
+  }
 }
 ```
 
 #### Mobile-Specific Adaptations
+
 - Simplified attention heatmaps (fewer cells visible)
 - Collapsible sections for complex visualizations
 - Progressive disclosure patterns
@@ -48,6 +52,7 @@ interface ResponsiveConfig {
 ### Performance Optimizations
 
 #### Mobile-Friendly Animations
+
 - Reduce particle counts on mobile devices
 - Simplify complex path animations
 - Use transform3d for hardware acceleration
@@ -55,6 +60,7 @@ interface ResponsiveConfig {
 - Add animation quality settings
 
 #### Data Visualization Adaptations
+
 - Smaller token displays with scrollable containers
 - Simplified probability charts with key information
 - Touch-friendly zoom and pan controls
@@ -64,6 +70,7 @@ interface ResponsiveConfig {
 ### Interaction Pattern Updates
 
 #### Touch Interactions
+
 - Replace hover with tap-to-reveal
 - Implement long-press for detailed information
 - Add swipe gestures for navigation
@@ -71,28 +78,32 @@ interface ResponsiveConfig {
 - Support pinch-to-zoom for detailed views
 
 #### Mobile Navigation
+
 ```typescript
 interface MobileNavigation {
-  stepNavigation: 'swipe' | 'tabs' | 'accordion';
-  visualizationControls: 'overlay' | 'bottom-sheet' | 'inline';
-  parameterAdjustment: 'sliders' | 'steppers' | 'presets';
+  stepNavigation: 'swipe' | 'tabs' | 'accordion'
+  visualizationControls: 'overlay' | 'bottom-sheet' | 'inline'
+  parameterAdjustment: 'sliders' | 'steppers' | 'presets'
 }
 ```
 
 ### Progressive Enhancement
 
 #### Feature Layering
+
 1. **Core Experience**: Basic functionality works on all devices
 2. **Enhanced Experience**: Additional features for larger screens
 3. **Premium Experience**: Full D3.js visualizations for desktop
 
 #### Mobile-First Components
+
 - Start with mobile layout and scale up
 - Use CSS Grid and Flexbox for responsive layouts
 - Implement container queries where beneficial
 - Create mobile-specific component variants
 
 ## Implementation Notes
+
 - Test on actual mobile devices, not just browser dev tools
 - Consider data usage and loading times on mobile networks
 - Implement efficient bundle splitting for mobile
@@ -100,6 +111,7 @@ interface MobileNavigation {
 - Add performance monitoring for mobile users
 
 ### Mobile UX Considerations
+
 - Larger touch targets (minimum 44px)
 - Sufficient contrast ratios for outdoor viewing
 - Thumb-friendly navigation patterns
@@ -107,6 +119,7 @@ interface MobileNavigation {
 - Clear visual hierarchy on small screens
 
 ### Accessibility Enhancements
+
 - Screen reader compatibility for visualizations
 - High contrast mode support
 - Reduced motion preferences
@@ -114,6 +127,7 @@ interface MobileNavigation {
 - Voice-over support for iOS
 
 ## Testing Strategy
+
 - Real device testing on iOS and Android
 - Performance testing on older/lower-end devices
 - Network throttling tests for slow connections
@@ -121,6 +135,7 @@ interface MobileNavigation {
 - Orientation change handling (portrait/landscape)
 
 ## Definition of Done
+
 - All visualizations work excellently on mobile devices
 - Touch interactions feel natural and responsive
 - Performance is smooth on mid-range mobile devices
