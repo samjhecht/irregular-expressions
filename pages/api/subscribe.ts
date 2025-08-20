@@ -2,7 +2,7 @@
 import fetch from 'isomorphic-unfetch';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email } = req.body;
 
   if (!email) {
@@ -10,9 +10,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID!;
-    const API_KEY = process.env.MAILCHIMP_API_KEY!;
-    const DATACENTER = process.env.MAILCHIMP_API_SERVER!;
+    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
+    const API_KEY = process.env.MAILCHIMP_API_KEY;
+    const DATACENTER = process.env.MAILCHIMP_API_SERVER;
+
+    if (!AUDIENCE_ID || !API_KEY || !DATACENTER) {
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
     const data = {
       email_address: email,
       status: 'subscribed',
@@ -42,4 +46,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ error: error instanceof Error ? error.message : error?.toString() });
   }
 };
+
+export default handler;
 

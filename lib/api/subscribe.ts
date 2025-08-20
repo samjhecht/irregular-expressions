@@ -12,9 +12,13 @@ export async function mailchimpSubscribe(req: NextApiRequest, res: NextApiRespon
   }
 
   try {
-    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID!;
-    const API_KEY = process.env.MAILCHIMP_API_KEY!;
-    const DATACENTER = process.env.MAILCHIMP_API_SERVER!;
+    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
+    const API_KEY = process.env.MAILCHIMP_API_KEY;
+    const DATACENTER = process.env.MAILCHIMP_API_SERVER;
+
+    if (!AUDIENCE_ID || !API_KEY || !DATACENTER) {
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
     const data = {
       email_address: email,
       status: 'subscribed',
