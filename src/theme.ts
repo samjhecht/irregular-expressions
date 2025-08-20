@@ -1,12 +1,11 @@
-
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react'
 
 const colors = {
   primary: '#000000',
   secondary: '#19857b',
   black: '#16161D',
   error: '#f44336', // red.A400 equivalent
-};
+}
 
 const breakpoints = {
   sm: '40em',
@@ -22,7 +21,6 @@ const theme = extendTheme({
   },
   colors,
   breakpoints,
-});
+})
 
-export default theme;
-
+export default theme

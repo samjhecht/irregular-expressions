@@ -12,12 +12,12 @@
 //         // Step 1: Get the Facebook Container ID
 //         const containerRes = await axios.get(`https://graph.facebook.com/v13.0/me?fields=instagram_business_account&access_token=${accessToken}`);
 //         const containerId = containerRes.data.instagram_business_account.id;
-    
+
 //         // Step 2: Upload the image to Facebook
 //         const formData = new FormData();
 //         formData.append('url', imageUrl);
 //         formData.append('caption', description);
-    
+
 //         const uploadRes = await axios.post(`https://graph.facebook.com/v13.0/${containerId}/media`, formData, {
 //             headers: {
 //                 'Content-Type': `multipart/form-data; boundary=${(formData as any)._boundary}`,
@@ -26,9 +26,9 @@
 //                 access_token: accessToken,
 //             },
 //         });
-    
+
 //         const mediaId = uploadRes.data.id;
-    
+
 //         // Step 3: Publish the image on Instagram
 //         const publishRes = await axios.post(`https://graph.facebook.com/v13.0/${containerId}/media_publish`, {
 //           media_id: mediaId,
@@ -37,7 +37,7 @@
 //             access_token: accessToken,
 //           },
 //         });
-    
+
 //         console.log('Instagram post created:', publishRes.data);
 //       } catch (error) {
 //         console.error('Error creating Instagram post:', error);
@@ -60,8 +60,6 @@
 //   }
 // }
 
-
-
 // // Frontend Code
 // // const response = await fetch('/api/publishToInstagram', {
 // //     method: 'POST',
@@ -73,14 +71,12 @@
 // //       description: 'your_description',
 // //     }),
 // //   });
-  
+
 // //   if (response.ok) {
 // //     console.log('Instagram post created successfully');
 // //   } else {
 // //     console.error('Error creating Instagram post');
 // //   }
-
-
 
 // // scripts/publishToInstagram.js
 // // const fs = require('fs');

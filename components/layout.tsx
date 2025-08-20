@@ -1,10 +1,10 @@
-import Header from './header';
-import StickyFooter from './stickyfooter';
-import { Flex } from '@chakra-ui/react';
+import Header from './header'
+import StickyFooter from './stickyfooter'
+import { Flex } from '@chakra-ui/react'
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const Layout = ({ children }: Props) => {
   return (
@@ -19,7 +19,6 @@ const Layout = ({ children }: Props) => {
           minHeight: '100vh',
           margin: '0 auto',
           padding: '2.5rem 1.25rem',
-
         }}
       >
         <Header />
@@ -27,13 +26,10 @@ const Layout = ({ children }: Props) => {
         <StickyFooter />
       </Flex>
     </>
-  );
-};
+  )
+}
 
-export default Layout;
-
-
-
+export default Layout
 
 // import Header from "./header";
 // import StickyFooter from "./stickyfooter";
@@ -46,7 +42,7 @@ export default Layout;
 // const Layout = ({ children }: Props) => {
 //   return (
 //     <>
-//     <Container 
+//     <Container
 //         maxWidth="md"
 //         style={{
 //           display: "flex",

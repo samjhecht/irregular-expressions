@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { Box, Text } from '@chakra-ui/react'
-import Highlight from 'react-highlight';
+import Highlight from 'react-highlight'
 
 const CodeBlockWrapper = styled(Box)`
   margin-top: 1rem;
-`;
+`
 
 const CodeBlockTitle = styled(Text)`
   padding-left: 1rem;
@@ -19,7 +19,7 @@ const CodeBlockTitle = styled(Text)`
   color: #b2b2b2;
   background-color: #1c1c1c;
   margin-bottom: 0;
-`;
+`
 
 const CodeBlockContainer = styled(Box)`
   overflow-x: auto;
@@ -75,22 +75,25 @@ const CodeBlockContainer = styled(Box)`
     opacity: 0.1;
     padding: 0.25rem;
   }
-`;
-
+`
 
 type MdxCodeBlockProps = {
-  children: string;
-  language?: string;
-  title?: string;
-};
+  children: string
+  language?: string
+  title?: string
+}
 
-const MdxCodeBlock = ({ children, language = 'text', title }: MdxCodeBlockProps) => (
+const MdxCodeBlock = ({
+  children,
+  language = 'text',
+  title,
+}: MdxCodeBlockProps) => (
   <CodeBlockWrapper>
     {title && <CodeBlockTitle>{title}</CodeBlockTitle>}
     <CodeBlockContainer>
       <Highlight className={`language-${language}`}>{children}</Highlight>
     </CodeBlockContainer>
   </CodeBlockWrapper>
-);
+)
 
-export default MdxCodeBlock;
+export default MdxCodeBlock
