@@ -12,7 +12,7 @@
   ],
   "overrides": [
     {
-      "files": ["next.config.js"],
+      "files": ["next.config.js", "jest.config.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
