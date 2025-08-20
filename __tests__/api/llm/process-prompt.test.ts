@@ -39,7 +39,6 @@ jest.mock('@anthropic-ai/sdk', () => {
 })
 
 import handler from '../../../pages/api/llm/process-prompt'
-import Anthropic from '@anthropic-ai/sdk'
 
 // Set up environment variables for tests
 const originalEnv = process.env
