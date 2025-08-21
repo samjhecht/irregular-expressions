@@ -1,6 +1,27 @@
 import { ExampleGenerator, generateExampleForRequest } from '../../../lib/llm/examples'
 import { ExampleGenerationRequest } from '../../../types/llm'
 
+// Type definitions for test data structures
+interface TokensOutputData {
+  subwords: string[]
+}
+
+interface EmbeddingsOutputData {
+  embeddings: number[][]
+}
+
+interface AttentionOutputData {
+  attentionWeights: number[][]
+}
+
+interface ProbabilitiesOutputData {
+  probabilities: number[]
+}
+
+interface PromptInputData {
+  rawInput: string
+}
+
 describe('ExampleGenerator', () => {
   let generator: ExampleGenerator
 
@@ -82,7 +103,7 @@ describe('ExampleGenerator', () => {
       expect(example.dataType).toBe('tokens')
       expect(example.inputData).toHaveProperty('text')
       expect(example.outputData).toHaveProperty('subwords')
-      expect(Array.isArray(example.outputData.subwords)).toBe(true)
+      expect(Array.isArray((example.outputData as TokensOutputData).subwords)).toBe(true)
     })
 
     it('should generate embedding example with vectors', () => {
@@ -92,7 +113,7 @@ describe('ExampleGenerator', () => {
       expect(example.dataType).toBe('embeddings')
       expect(example.inputData).toHaveProperty('tokenIds')
       expect(example.outputData).toHaveProperty('embeddings')
-      expect(Array.isArray(example.outputData.embeddings)).toBe(true)
+      expect(Array.isArray((example.outputData as EmbeddingsOutputData).embeddings)).toBe(true)
     })
 
     it('should generate attention example with matrix', () => {
@@ -102,7 +123,7 @@ describe('ExampleGenerator', () => {
       expect(example.dataType).toBe('attention')
       expect(example.inputData).toHaveProperty('queries')
       expect(example.outputData).toHaveProperty('attentionWeights')
-      expect(Array.isArray(example.outputData.attentionWeights)).toBe(true)
+      expect(Array.isArray((example.outputData as AttentionOutputData).attentionWeights)).toBe(true)
     })
 
     it('should generate probability example with valid probabilities', () => {
@@ -111,10 +132,10 @@ describe('ExampleGenerator', () => {
 
       expect(example.dataType).toBe('probabilities')
       expect(example.outputData).toHaveProperty('probabilities')
-      expect(Array.isArray(example.outputData.probabilities)).toBe(true)
+      expect(Array.isArray((example.outputData as ProbabilitiesOutputData).probabilities)).toBe(true)
       
       // Check probabilities sum to approximately 1
-      const probs = example.outputData.probabilities as number[]
+      const probs = (example.outputData as ProbabilitiesOutputData).probabilities
       const sum = probs.reduce((acc, prob) => acc + prob, 0)
       expect(sum).toBeCloseTo(1, 2)
     })
@@ -123,11 +144,11 @@ describe('ExampleGenerator', () => {
   describe('user input updates', () => {
     it('should update user input and affect generated examples', () => {
       const originalResult = generator.generateExampleForStep('prompt-reception')
-      const originalInput = originalResult.example!.inputData.rawInput
+      const originalInput = (originalResult.example!.inputData as PromptInputData).rawInput
 
       generator.updateUserInput('New test input')
       const updatedResult = generator.generateExampleForStep('prompt-reception')
-      const updatedInput = updatedResult.example!.inputData.rawInput
+      const updatedInput = (updatedResult.example!.inputData as PromptInputData).rawInput
 
       expect(originalInput).toBe('Hello, how are you?')
       expect(updatedInput).toBe('New test input')
@@ -137,7 +158,7 @@ describe('ExampleGenerator', () => {
   describe('mathematical operations', () => {
     it('should generate valid softmax probabilities', () => {
       const result = generator.generateExampleForStep('logits-calculation')
-      const probabilities = result.example!.outputData.probabilities as number[]
+      const probabilities = (result.example!.outputData as ProbabilitiesOutputData).probabilities
 
       // All probabilities should be positive
       probabilities.forEach(prob => {
@@ -152,7 +173,7 @@ describe('ExampleGenerator', () => {
 
     it('should generate reasonable token distributions', () => {
       const result = generator.generateExampleForStep('byte-pair-encoding')
-      const subwords = result.example!.outputData.subwords as string[]
+      const subwords = (result.example!.outputData as TokensOutputData).subwords
 
       expect(subwords.length).toBeGreaterThan(0)
       subwords.forEach(subword => {
@@ -199,6 +220,6 @@ describe('generateExampleForRequest', () => {
     const result = generateExampleForRequest(request)
     
     expect(result.success).toBe(true)
-    expect(result.example!.inputData.rawInput).toBe(customInput)
+    expect((result.example!.inputData as PromptInputData).rawInput).toBe(customInput)
   })
 })

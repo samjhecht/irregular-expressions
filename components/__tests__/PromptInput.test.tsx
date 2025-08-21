@@ -97,9 +97,10 @@ describe('PromptInput', () => {
     const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
     const submitButton = screen.getByText('Process Prompt')
 
-    // Create a string longer than 1000 characters
+    // Create a string longer than 1000 characters and paste it for better performance
     const longText = 'a'.repeat(1001)
-    await user.type(textarea, longText)
+    await user.click(textarea)
+    await user.paste(longText)
     await user.click(submitButton)
 
     await waitFor(() => {
@@ -195,5 +196,250 @@ describe('PromptInput', () => {
 
     const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
     expect(textarea).toHaveValue('Explain how photosynthesis works')
+  })
+
+  it('submits form with Ctrl+Enter keyboard shortcut', async () => {
+    const user = userEvent.setup()
+    const mockResponse = {
+      originalPrompt: 'Keyboard shortcut test',
+      response: 'AI response',
+      metadata: {
+        model: 'claude-3-haiku',
+        tokenCount: { input: 10, output: 20 },
+        processingTime: 1000
+      }
+    }
+
+    ;(fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse
+    })
+
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+
+    await user.type(textarea, 'Keyboard shortcut test')
+    await user.keyboard('{Control>}{Enter}{/Control}')
+
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith('/api/llm/process-prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: 'Keyboard shortcut test' })
+      })
+      expect(mockOnPromptProcessed).toHaveBeenCalledWith(mockResponse)
+    })
+  })
+
+  it('submits form with Cmd+Enter keyboard shortcut on Mac', async () => {
+    const user = userEvent.setup()
+    const mockResponse = {
+      originalPrompt: 'Mac shortcut test',
+      response: 'AI response',
+      metadata: {
+        model: 'claude-3-haiku',
+        tokenCount: { input: 10, output: 20 },
+        processingTime: 1000
+      }
+    }
+
+    ;(fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse
+    })
+
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+
+    await user.type(textarea, 'Mac shortcut test')
+    await user.keyboard('{Meta>}{Enter}{/Meta}')
+
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith('/api/llm/process-prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: 'Mac shortcut test' })
+      })
+      expect(mockOnPromptProcessed).toHaveBeenCalledWith(mockResponse)
+    })
+  })
+
+  it('disables textarea when disabled prop is true', async () => {
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+        disabled={true}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+    
+    // The textarea should definitely be disabled
+    expect(textarea).toBeDisabled()
+    
+    // The component should not be functionally interactive even if some elements 
+    // don't show disabled state due to Chakra UI behavior
+  })
+
+  it('shows loading state during form submission', async () => {
+    const user = userEvent.setup()
+    
+    // Mock a delayed response to test loading state
+    ;(fetch as jest.Mock).mockImplementationOnce(() => 
+      new Promise(resolve => 
+        setTimeout(() => resolve({
+          ok: true,
+          json: async () => ({
+            originalPrompt: 'Test prompt',
+            response: 'AI response',
+            metadata: {
+              model: 'claude-3-haiku',
+              tokenCount: { input: 10, output: 20 },
+              processingTime: 1000
+            }
+          })
+        }), 100)
+      )
+    )
+
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+    const submitButton = screen.getByText('Process Prompt')
+
+    await user.type(textarea, 'Valid prompt for testing loading state')
+    await user.click(submitButton)
+
+    // During submission, should show loading text
+    expect(textarea).toBeDisabled()
+    expect(screen.getByText('Processing...')).toBeInTheDocument()
+
+    // Wait for submission to complete
+    await waitFor(() => {
+      expect(mockOnPromptProcessed).toHaveBeenCalled()
+    })
+
+    // After completion, elements should be enabled again
+    expect(textarea).not.toBeDisabled()
+  })
+
+  it('shows minimum character warning at exact minimum length', async () => {
+    const user = userEvent.setup()
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+
+    // Type exactly 9 characters (one less than minimum)
+    await user.type(textarea, 'exactly 9')
+    expect(screen.getByText('(minimum 10)')).toBeInTheDocument()
+
+    // Add one more character to reach minimum
+    await user.type(textarea, '!')
+    expect(screen.queryByText('(minimum 10)')).not.toBeInTheDocument()
+  })
+
+  it('shows character count at exact maximum length', async () => {
+    const user = userEvent.setup()
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+
+    // Type exactly 1000 characters (maximum allowed)
+    const exactMaxText = 'a'.repeat(1000)
+    await user.click(textarea)
+    await user.paste(exactMaxText)
+
+    expect(screen.getByText('1000/1000 characters')).toBeInTheDocument()
+    
+    // Submit button should be enabled at max length
+    const submitButton = screen.getByText('Process Prompt')
+    expect(submitButton).not.toBeDisabled()
+  })
+
+  it('shows validation error when exceeding maximum length', async () => {
+    const user = userEvent.setup()
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+    const submitButton = screen.getByText('Process Prompt')
+
+    // Type more than 1000 characters
+    const tooLongText = 'a'.repeat(1001)
+    await user.click(textarea)
+    await user.paste(tooLongText)
+
+    expect(screen.getByText('1001/1000 characters')).toBeInTheDocument()
+
+    // Try to submit and check for validation error
+    await user.click(submitButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Prompt must be less than 1000 characters')).toBeInTheDocument()
+    })
+  })
+
+  it('shows validation behavior with empty input', async () => {
+    const user = userEvent.setup()
+    render(
+      <MockedPromptInput
+        onPromptProcessed={mockOnPromptProcessed}
+        onError={mockOnError}
+      />
+    )
+
+    const textarea = screen.getByPlaceholderText(/Enter your prompt here/)
+    const submitButton = screen.getByText('Process Prompt')
+
+    // Character count should show 0
+    expect(screen.getByText('0/1000 characters')).toBeInTheDocument()
+    expect(screen.getByText('(minimum 10)')).toBeInTheDocument()
+
+    // Type something then delete it all
+    await user.type(textarea, 'temporary text')
+    await user.clear(textarea)
+
+    // Should show empty state again
+    expect(screen.getByText('0/1000 characters')).toBeInTheDocument()
+    expect(screen.getByText('(minimum 10)')).toBeInTheDocument()
+
+    // Try to submit empty form
+    await user.click(submitButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Prompt is required')).toBeInTheDocument()
+    })
   })
 })

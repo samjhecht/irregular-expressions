@@ -208,7 +208,7 @@ describe('getDefaultLLMSteps', () => {
       expect(step.order).toBe(index + 1)
       expect(step.expandable).toBe(true)
       expect(step.subSteps).toBeDefined()
-      expect(step.subSteps!.length).toBeGreaterThan(0)
+      expect(step.subSteps?.length).toBeGreaterThan(0)
     })
 
     // Check sub-step structure
